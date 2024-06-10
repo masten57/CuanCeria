@@ -1,0 +1,168 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% tailwind_css %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CuanCeria</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+<body class="bg-gradient-to-b from-[#131313] to-[#17295e] via-[#131313] via-27% min-h-screen text-white">
+    <header class="p-6 flex justify-between items-center px-[6vw]">
+        <!-- logo -->
+        <div class="anek-latin-semibold text-[3vw]">CuanCeria</div>
+        <!-- Navbar -->
+        <nav class="space-x-10 text-xl">
+            <a href="#" class="hover:underline anek-latin-extralight text-[1.8vw]">Home</a>
+            <a href="#" class="hover:underline anek-latin-extralight text-[1.8vw]">Desc</a>
+            <a href="#" class="hover:underline anek-latin-extralight text-[1.8vw]">News</a>
+            <a href="#" class="hover:underline anek-latin-extralight text-[1.8vw]">Prediction</a>
+        </nav>
+    </header>
+
+    <main class="w-full">     
+    <!-- DIV 1 - INFORMASI SAHAM BCA -->
+        <div class="h-[30vw] mt-10 flex justify-center space-x-10 items-center">
+            
+            <!-- logo BCA -->
+            <div class="p-5 bg-white rounded-2xl shadow-lg px-[4vw] h-full flex items-center">
+                <img src="{% static 'images/logo_bca_portrait.svg' %}" alt="BCA Logo" class="w-[9vw]">
+            </div>
+            
+            <!-- Isi dari BCA -->
+            <div class="h-full pl-[5vw] pr-[17vw] rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+                <div class="flex-col">
+                    <h1 class="text-[2.8vw] anek-latin-extralight">PT Bank Central Asia Tbk ({{ ticker }})</h1>
+                    <p class="text-[5vw] anek-latin-semibold">{{ last_price }} <span class="text-[2vw]">IDR</span></p>
+                    <div class="flex space-x-2">
+                        {% if price_change > 0 %}
+                            <img src="{% static 'images/panah_naik.svg' %}" alt="panah naik" class="w-[1.4vw]">
+                            <p class="text-[2vw] text-[#00E21A] anek-latin-regular">(+{{ percent_change|floatformat:2 }}%) Today +{{ price_change|floatformat:2 }} IDR</p>
+                        {% elif price_change < 0 %}
+                            <img src="{% static 'images/panah_turun.svg' %}" alt="panah turun" class="w-[1.4vw]">
+                            <p class="text-[2vw] text-[#E21A00] anek-latin-regular">({{ percent_change|floatformat:2 }}%) Today {{ price_change|floatformat:2 }} IDR</p>
+                        {% else %}
+                            <img src="{% static 'images/panah_datar.svg' %}" alt="panah datar" class="w-[1.4vw]">
+                            <p class="text-[2vw] text-white anek-latin-regular">(0.00%) Today 0.00 IDR</p>
+                        {% endif %}
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+    <!-- DIV 2 - GRAFIK CANDLESTICK -->
+    <div class="h-[30vw] mt-32 flex justify-center space-x-10 items-center bg-yellow">
+        <div class="">
+            <!-- tulisan stock chart -->
+            <div class="flex items-center">
+                <p class="anek-latin-semibold text-[5vw]">Stock Chart </p>
+                <p class="font-bold font-outline-1 text-transparent text-[2vw] mt-[1.5vw] ml-[1vw]">Graph</p>
+            </div>
+
+            <!-- isi time seriesnya -->
+            <div id="candlestick-chart" class="h-[40vw] w-[60vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10"></div>
+            <script>
+                var data = [{
+                    x: {{ dates|safe }},
+                    close: {{ close_prices|safe }},
+                    decreasing: {line: {color: 'red'}},
+                    high: {{ high_prices|safe }},
+                    increasing: {line: {color: 'green'}},
+                    low: {{ low_prices|safe }},
+                    open: {{ open_prices|safe }},
+                    type: 'candlestick',
+                    xaxis: 'x',
+                    yaxis: 'y'
+                }];
+
+                var layout = {
+                    dragmode: 'zoom',
+                    margin: {
+                        r: 10,
+                        t: 25,
+                        b: 40,
+                        l: 60
+                    },
+                    showlegend: false,
+                    plot_bgcolor: "rgba(0,0,0,0)",
+                    paper_bgcolor: "rgba(0,0,0,0)",
+                    font: {
+                        color: "white"
+                    },
+                    xaxis: {
+                        rangeslider: {
+                            visible: false
+                        },
+                        color: "white",
+                        showgrid: false
+                    },
+                    yaxis: {
+                        color: "white",
+                        showgrid: false
+                    },
+                    width: 800,
+                    height: 400
+                };
+
+                Plotly.newPlot('candlestick-chart', data, layout);
+            </script>
+        </div>
+    </div>
+    
+    <!-- DIV 3 - DESKRIPSI -->
+    <div class="h-full mt-32 flex justify-center items-center my-10 mr-[7vw]">
+        
+        <!-- kiri -->
+        <div class="mr-[-17vw] mb-[-10vw]">
+            <img src="{% static 'images/menara_bca.svg' %}" alt="menara bca" class="w-[120vw]">
+        </div>
+        
+        <!-- kanan -->
+        <div class="">
+            <div class="flex items-center space-x-2">
+                <img src="{% static 'images/logo_desc.svg' %}" alt="menara bca" class="w-[4vw]">
+                <p class="anek-latin-semibold text-[4vw]">Description</p>
+            </div>
+            <div class="anek-latin-light h-full p-10 text-justify rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 pl-[10vw] text-[1.5vw]">
+                <p><span class="font-bold">PT Bank Central Asia Tbk (BCA)</span>, dengan kode saham BBCA, adalah <span class="font-bold">bank swasta terbesar di Indonesia</span> berdasarkan aset dan kapitalisasi pasar. Didirikan pada <span class="font-bold">10 Oktober 1955</span>, BCA telah mengalami beberapa perubahan nama dan mulai beroperasi sebagai bank pada 21 Februari 1957 di Jakarta. BCA diambil alih oleh pemerintah selama krisis moneter 1997-1998 dan melakukan <span class="font-bold">IPO pada tahun 2000</span> dengan harga Rp1.400 per saham.</p>
+                <p class="mt-5">BCA terus berkembang dengan menambah kantor cabang dan jaringan ATM serta memperkenalkan berbagai inovasi seperti layanan pembayaran tagihan di ATM, kartu ATM dengan fitur debet, ATM non tunai, dan ATM setoran tunai. Hingga Maret 2023, <span class="font-bold">BCA memiliki lebih dari 1.200 cabang dan 18.000 ATM di seluruh Indonesia</span>. Dengan sekitar 25.000 karyawan, BCA memiliki visi untuk menjadi bank pilihan utama yang berperan penting dalam perekonomian Indonesia.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DIV 4 - DESKRIPSI -->
+    <div class="h-full my-[10vw] mx-[9vw]">
+        
+        <!-- tulisan news -->
+        <div class="">
+            <img src="{% static 'images/news_text.svg' %}" alt="menara bca" class="w-[50vw] ml-[-8vw] mb-[-6.6vw]">
+        </div>
+        
+        <!-- isi news -->
+        <div>
+            <div class="anek-latin-light h-full p-10 pt-[8vw] text-justify rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+            <!-- baris 1 -->
+            <!-- INI MASI BLOM KELARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR ntr mo tak benerin, lagi mager, masi belom imbang kiri tengah kanan-->
+            <div class="flex space-x-10">
+                <div class="anek-latin-light h-[22vw] p-5 text-center rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 text-[1.3vw]">
+                    <img src="{% static 'images/gambar_test1.png' %}" alt="gambar 1" class="h-[12vw] rounded-lg mb-3">
+                    <a href="#" class="anek-latin-semibold hover:underline">5 Fakta Kebangkitan IHSG: Ada Pesta BCA Hingga Terbangnya Saham Bakrie</a>
+                </div>
+                <div class="anek-latin-light h-[22vw] p-5 text-center rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 text-[1.3vw]">
+                    <img src="{% static 'images/gambar_test1.png' %}" alt="gambar 2" class="h-[12vw] rounded-lg mb-3">
+                    <a href="#" class="anek-latin-semibold hover:underline">Saham BCA Favorit Investor Asing Selama Sepekan, TLKM Banyak Dijual</a>
+                </div>
+                <div class="anek-latin-light h-[22vw] p-5 text-center rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 text-[1.3vw]">
+                    <img src="{% static 'images/gambar_test1.png' %}" alt="gambar 2" class="h-[12vw] rounded-lg mb-3">
+                    <a href="#" class="anek-latin-semibold hover:underline">Saham BCA (BBCA) Banyak Dilepas Asing, Masih Menarik?</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    </main>
+</body>
+</html>
