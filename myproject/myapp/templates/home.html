@@ -126,7 +126,7 @@
                 <img src="{% static 'images/logo_desc.svg' %}" alt="menara bca" class="w-[4vw]">
                 <p class="anek-latin-semibold text-[4vw]">Description</p>
             </div>
-            <div class="anek-latin-light h-full p-10 text-justify rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 pl-[10vw] text-[1.5vw]">
+            <div class="anek-latin-extralight h-full p-10 text-justify rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 pl-[10vw] text-[1.5vw]">
                 <p> <a href="https://www.bca.co.id/id/tentang-bca/Hubungan-Investor/Informasi-Saham"><span class="font-bold underline">PT Bank Central Asia Tbk (BCA)</span></a>, dengan kode saham BBCA, adalah <span class="font-bold">bank swasta terbesar di Indonesia</span> berdasarkan aset dan kapitalisasi pasar. Didirikan pada <span class="font-bold">10 Oktober 1955</span>, BCA telah mengalami beberapa perubahan nama dan mulai beroperasi sebagai bank pada 21 Februari 1957 di Jakarta. BCA diambil alih oleh pemerintah selama krisis moneter 1997-1998 dan melakukan <span class="font-bold">IPO pada tahun 2000</span> dengan harga Rp1.400 per saham.</p>
                 <p class="mt-5">BCA terus berkembang dengan menambah kantor cabang dan jaringan ATM serta memperkenalkan berbagai inovasi seperti layanan pembayaran tagihan di ATM, kartu ATM dengan fitur debet, ATM non tunai, dan ATM setoran tunai. Hingga Maret 2023, <span class="font-bold">BCA memiliki lebih dari 1.200 cabang dan 18.000 ATM di seluruh Indonesia</span>. Dengan sekitar 25.000 karyawan, BCA memiliki visi untuk menjadi bank pilihan utama yang berperan penting dalam perekonomian Indonesia.</p>
             </div>
@@ -163,6 +163,119 @@
         </div>
     </div>
 
-    </main>
+    <!-- DIV 5 - RSI Chart -->
+    <div class="h-full mt-[7vw] mx-[9vw]">
+        <div class="flex items-center">
+            <div>
+                <img src="{% static 'images/rsi.svg' %}" alt="rsi" srcset="" class="h-[4vw] mr-2">
+            </div>
+            <div class="flex items-center">
+                <p class="anek-latin-semibold text-[4vw]">RSI (Relative Strength Index)</p>
+            </div> 
+        </div>
+        <div class="flex mb-4 mt-[-1vw]">
+            <p class="anek-latin-thin text-[2vw]">Momentum indicator used in technical analysis</p>
+        </div>
+        <div id="rsi-chart" class="h-[35vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+        </div>
+    </div>
+    <!-- RSI DESC -->
+    <div class="my-[3vw] mx-[9vw] h-full rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+        <div class="flex flex-col p-10">
+            <div class="anek-latin-semibold text-[2.5vw]">
+                Mamahami RSI
+            </div>
+            <div class="text-[1.3vw] anek-latin-extralight text-justify">
+                RSI (Relative Strength Index) adalah indikator momentum yang digunakan dalam analisis teknikal untuk mengukur kecepatan dan perubahan pergerakan harga. Ini membantu <span class="font-bold">menentukan apakah suatu saham atau aset lainnya sedang overbought (terlalu banyak dibeli) atau oversold (terlalu banyak dijual)</span>
+            </div>
+
+            <!-- rsi 70 -->
+            <div class="flex mt-[1.5vw]">
+                <div class="bg-black anek-latin-bold text-[#E21A00] p-3 rounded-2xl text-[1.3vw]">
+                    70
+                </div>
+                <div class="bg-white my-2 rounded-md w-full ml-2">
+                    <!-- kasih garis patah hijau jalan dari kiri ke kanan gitu kayak animasi -->
+                </div>
+            </div>
+
+            <!-- rsi 30 -->
+            <div class="flex mt-[1.5vw]">
+                <div class="bg-black anek-latin-bold text-[#089981] p-3 rounded-2xl text-[1.3vw]">
+                    30
+                </div>
+                <div class="bg-white my-2 rounded-md w-full ml-2">
+                    <!-- kasih garis patah patah merah jalan dari kiri ke kanan gitu kayak animasi -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        var rsi_data = [{
+            x: {{ dates|safe }},
+            y: {{ rsi_values|safe }},
+            type: 'scatter',
+            mode: 'lines',
+            line: {color: '#E0E270'},
+            name: 'RSI'
+        }];
+
+        var rsi_layout = {
+            // title: 'RSI (Relative Strength Index)',
+            shapes: [
+                {
+                    type: 'line',
+                    x0: {{ dates|safe }}[0],
+                    y0: 70,
+                    x1: {{ dates|safe }}[{{ dates|safe }}.length - 1],
+                    y1: 70,
+                    line: {
+                        color: 'red',
+                        width: 2,
+                        dash: 'dashdot'
+                    }
+                },
+                {
+                    type: 'line',
+                    x0: {{ dates|safe }}[0],
+                    y0: 30,
+                    x1: {{ dates|safe }}[{{ dates|safe }}.length - 1],
+                    y1: 30,
+                    line: {
+                        color: 'green',
+                        width: 2,
+                        dash: 'dashdot'
+                    }
+                }
+            ],
+            yaxis: {
+                range: [0, 100]
+            },
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
+            font: {
+                family: 'anek-latin-thin, sans-serif',
+                size: 12,
+                color: "white"
+            },
+            xaxis: {
+                color: "white",
+                showgrid: true,
+                rangeslider: {
+                    visible: true
+                }
+            },
+            yaxis: {
+                color: "white",
+                showgrid: true
+            },
+            width: 1000,
+            height: 500
+        };
+
+        Plotly.newPlot('rsi-chart', rsi_data, rsi_layout);
+    </script>
+    
 </body>
 </html>

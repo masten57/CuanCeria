@@ -86,5 +86,6 @@
 
 .bg-custom-blue-black {
   background: rgb(19,19,19);
-  background: linear-gradient(180deg, rgba(19,19,19,1) 0%, rgba(23,41,94,1) 27%);
+  background: linear-gradient(180deg, rgba(19,19,19,1) 0%, rgba(23,41,94,1) 40%);
 }
+
