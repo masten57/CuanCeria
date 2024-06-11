@@ -1,7 +1,16 @@
 from django.shortcuts import render
-from myapp.data_ingestion import fetch_stock_data
-from myapp.data_processing import preprocess_data
+import pandas as pd
+import pandas_ta as ta
+from sklearn.preprocessing import MinMaxScaler
+import tensorflow as tf
+# from tensorflow.keras.models import Sequential, load_model
+# from tensorflow.keras.optimizers import Adam
+# from tensorflow.keras import layers
+import numpy as np
+import os
+import joblib
 from datetime import datetime, timedelta
+import datetime
 import yfinance as yf
 import matplotlib.pyplot as plt
 import io
@@ -10,13 +19,8 @@ import pandas as pd
 import numpy as np
 
 def index(request):
-    ticker = 'BBCA.JK'
-    start_date = (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d')
-    end_date = datetime.now().strftime('%Y-%m-%d')
-    raw_df = fetch_stock_data(ticker, start_date, end_date)
-    processed_df = preprocess_data(raw_df)
-    tables = processed_df.to_html(classes='table-auto border-collapse border border-gray-200', justify='center')
-    return render(request, 'index.html', {'tables': tables})
+
+    return render(request, 'index.html')
 
 def get_stock_data(ticker):
     stock = yf.Ticker(ticker)
