@@ -23,6 +23,9 @@
     </header>
 
     <main class="w-full">     
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
     <!-- DIV 1 - INFORMASI SAHAM BCA -->
         <div class="h-[30vw] mt-[13vw] flex justify-center space-x-10 items-center">
             
@@ -51,6 +54,8 @@
                 </div>
             </div>
         </div>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
     <!-- DIV 2 - GRAFIK CANDLESTICK -->
     <div class="h-[30vw] mt-[15vw] flex justify-center space-x-10 items-center">
@@ -111,7 +116,9 @@
             </div>
         </div>
     </div>
-    
+
+ <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+   
     <!-- DIV 3 - DESKRIPSI -->
     <div class="h-full mt-[15vw] flex justify-center items-center my-10 mr-[7vw]">
         
@@ -132,6 +139,8 @@
             </div>
         </div>
     </div>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
     <!-- DIV 4 - DESKRIPSI -->
     <div class="h-full my-[7vw] mx-[9vw]">
@@ -163,7 +172,9 @@
         </div>
     </div>
 
-    <!-- DIV 5 - RSI Chart -->
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    
+<!-- DIV 5 - RSI Chart -->
     <div class="h-full mt-[7vw] mx-[9vw]">
         <div class="flex items-center">
             <div>
@@ -179,36 +190,93 @@
         <div id="rsi-chart" class="h-[35vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
         </div>
     </div>
+    
     <!-- RSI DESC -->
     <div class="my-[3vw] mx-[9vw] h-full rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
         <div class="flex flex-col p-10">
-            <div class="anek-latin-semibold text-[2.5vw]">
-                Mamahami RSI
+            <div class="anek-latin-bold text-[3vw]">
+                Mamahami - <span class="font-bold font-outline-1 text-transparent text-[2.5vw]">RSI</span>
             </div>
             <div class="text-[1.3vw] anek-latin-extralight text-justify">
                 RSI (Relative Strength Index) adalah indikator momentum yang digunakan dalam analisis teknikal untuk mengukur kecepatan dan perubahan pergerakan harga. Ini membantu <span class="font-bold">menentukan apakah suatu saham atau aset lainnya sedang overbought (terlalu banyak dibeli) atau oversold (terlalu banyak dijual)</span>
             </div>
 
-            <!-- rsi 70 -->
+            <!-- RSI > 70 -->
             <div class="flex mt-[1.5vw]">
-                <div class="bg-black anek-latin-bold text-[#E21A00] p-3 rounded-2xl text-[1.3vw]">
-                    70
+                <div class="flex justify-center items-center h-[3.5vw] w-[22vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                    <div class="anek-latin-bold text-[#E21A00] ">Kondisi Overbought (70)</div>
                 </div>
-                <div class="bg-white my-2 rounded-md w-full ml-2">
-                    <!-- kasih garis patah hijau jalan dari kiri ke kanan gitu kayak animasi -->
+                <div class="bg-white my-2 rounded-xl w-full ml-2 flex justify-center items-center">
+                    <div class="red-dashed-line"></div><!-- kasih garis patah patah warna hijau gerak dari kiri ke kanan gitu kayak animasi -->
+                </div>
+            </div>
+                <!-- Poin 1 RSI -->
+                <div class="flex items-center mb-2 mt-2">
+                    <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                        1
+                    </div>
+                    <div class="anek-latin-extralight text-[1.3vw]">
+                        Ketika RSI > 70, ini berarti aset mungkin sedang overbought /  <span class="font-bold">terlalu banyak dibeli.</span>
+                    </div>
+                </div>
+
+                <!-- Poin 2 RSI -->
+                <div class="flex items-center mb-2">
+                    <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                        2
+                    </div>
+                    <div class="anek-latin-extralight text-[1.3vw]">
+                        Saran: <span class="font-bold">Pertimbangkan untuk menjual</span>, karena harga mungkin akan segera turun.
+                    </div>
+                </div>
+                
+                <!-- Poin 3 RSI -->
+                <div class="flex items-center">
+                    <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                        3
+                    </div>
+                    <div class="anek-latin-extralight text-[1.3vw]">
+                        Menjual saat RSI di atas 70 bisa <span class="font-bold">membantu mengamankan keuntungan sebelum harga turun.</span>                    </div>
+                </div>
+
+            <!-- RSI < 30 -->
+            <div class="flex mt-[1.5vw]">
+                <div class="flex justify-center items-center h-[3.5vw] w-[22vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                    <div class="anek-latin-bold text-[#089981]">Kondisi Oversold (30)</div>
+                </div>
+                <div class="bg-white my-2 rounded-xl w-full ml-2 flex justify-center items-center">
+                    <div class="green-dashed-line"></div><!-- kasih garis patah patah warna merah gerak dari kiri ke kanan gitu kayak animasi -->
+                </div>
+            </div>
+            <!-- Poin 1 RSI -->
+            <div class="flex items-center mb-2 mt-2">
+                <div class="bg-[#089981] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                    1
+                </div>
+                <div class="anek-latin-extralight text-[1.3vw]">
+                    Ketika RSI < 30, ini berarti aset mungkin sedang oversold /  <span class="font-bold">terlalu banyak dijual.</span>
                 </div>
             </div>
 
-            <!-- rsi 30 -->
-            <div class="flex mt-[1.5vw]">
-                <div class="bg-black anek-latin-bold text-[#089981] p-3 rounded-2xl text-[1.3vw]">
-                    30
+            <!-- Poin 2 RSI -->
+            <div class="flex items-center mb-2">
+                <div class="bg-[#089981] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                    2
                 </div>
-                <div class="bg-white my-2 rounded-md w-full ml-2">
-                    <!-- kasih garis patah patah merah jalan dari kiri ke kanan gitu kayak animasi -->
+                <div class="anek-latin-extralight text-[1.3vw]">
+                    Saran: <span class="font-bold">Pertimbangkan untuk membeli</span>, karena harga mungkin akan segera naik.
                 </div>
             </div>
-
+            
+            <!-- Poin 3 RSI -->
+            <div class="flex items-center">
+                <div class="bg-[#089981] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                    3
+                </div>
+                <div class="anek-latin-extralight text-[1.3vw]">
+                    Membeli saat RSI di bawah 30 bisa  <span class="font-bold">memberi kesempatan mendapatkan harga yang rendah sebelum naik kembali.</span>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -232,7 +300,7 @@
                     y1: 70,
                     line: {
                         color: 'red',
-                        width: 2,
+                        width: 4,
                         dash: 'dashdot'
                     }
                 },
@@ -243,8 +311,8 @@
                     x1: {{ dates|safe }}[{{ dates|safe }}.length - 1],
                     y1: 30,
                     line: {
-                        color: 'green',
-                        width: 2,
+                        color: '#34b093',
+                        width: 4,
                         dash: 'dashdot'
                     }
                 }
@@ -276,6 +344,287 @@
 
         Plotly.newPlot('rsi-chart', rsi_data, rsi_layout);
     </script>
+
+ <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+   
+    <!-- DIV 6 - MACD Chart -->
+    <div class="h-full mt-[7vw] mx-[9vw]">
+        <div class="flex items-center">
+            <div>
+                <img src="{% static 'images/macd.svg' %}" alt="macd" srcset="" class="h-[3vw] mr-2">
+            </div>
+            <div class="flex items-center">
+                <p class="anek-latin-semibold text-[3.6vw]">MACD (Moving Average Convergence Divergence)</p>
+            </div> 
+        </div>
+        <div class="flex mb-4 mt-[-0.5vw]">
+            <p class="anek-latin-thin text-[2vw]">Trend-following momentum indicator</p>
+        </div>
+        <div id="macd-chart" class="h-[35vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+        </div>
+    </div>
     
+    <!-- MACD DESC -->
+    <div class="my-[3vw] mx-[9vw] h-full rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+        <div class="flex flex-col p-10">
+            <div class="anek-latin-bold text-[3vw]">
+                Mamahami - <span class="font-bold font-outline-1 text-transparent text-[2.5vw]">MACD</span>
+            </div>
+            <div class="text-[1.3vw] anek-latin-extralight text-justify">
+                MACD (Moving Average Convergence Divergence) adalah alat yang membantu trader dalam beberapa hal seperti <span class="font-bold">mengetahui tren harga </span> yang sedang berlangsung, <span class="font-bold">memahami momentum harga</span> yang sedang terjadi, dan <span class="font-bold">menentukan kapan harus membeli atau menjual </span> saham yang memiliki beberapa komponen utama seperti moving average, kejadian convergence, dan kejadian divergence
+            
+            <!-- MACD LINE -->
+            <div class="flex mt-[1.5vw]">
+                <div class="flex justify-center items-center h-[3.5vw] w-[22vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                    <div class="anek-latin-bold text-[#00E676] ">Garis MACD (MACD Line)</div>
+                </div>
+                <div class="bg-white my-2 rounded-xl w-full ml-2 flex justify-center items-center">
+                    <div class="green-dashed-line2"></div>
+                </div>
+            </div>
+                <!-- Poin 1 MACD -->
+                <div class="flex items-center mb-2 mt-2">
+                    <div class="text-black bg-[#00E676] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                        1
+                    </div>
+                    <div class="anek-latin-extralight text-[1.3vw]">
+                        Ini adalah <span class="font-bold">garis utama</span> yang kita perhatikan.
+                    </div>
+                </div>
+
+                <!-- Poin 2 RSI -->
+                <div class="flex items-center mb-2">
+                    <div class="text-black bg-[#00E676] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                        2
+                    </div>
+                    <div class="anek-latin-extralight text-[1.3vw]">
+                        Sinyal Beli: <span class="font-bold"><span class="text-[#00E676]">Garis MACD</span> naik di atas <span class="text-[#F72D13]">Garis Sinyal</span></span>, harga kemungkinan akan naik.</div>
+                </div>
+                
+                <!-- Poin 3 RSI -->
+                <div class="flex items-center">
+                    <div class="text-black bg-[#00E676] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                        3
+                    </div>
+                    <div class="anek-latin-extralight text-[1.3vw]">
+                        Sinyal Jual: <span class="font-bold"><span class="text-[#00E676]">Garis MACD</span> naik di bawah <span class="text-[#F72D13]">Garis Sinyal</span></span>, harga kemungkinan akan turun.</div>
+                </div>
+
+            <!-- SIGNAL LINE -->
+            <div class="flex mt-[1.5vw]">
+                <div class="flex justify-center items-center h-[3.5vw] w-[22vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                    <div class="anek-latin-bold text-[#E21A00]">Garis Sinyal (Signal Line)</div>
+                </div>
+                <div class="bg-white my-2 rounded-xl w-full ml-2 flex justify-center items-center">
+                    <div class="red-dashed-line2"></div><!-- kasih garis patah patah warna merah gerak dari kiri ke kanan gitu kayak animasi -->
+                </div>
+            </div>
+            <!-- Poin 1 MACD -->
+            <div class="flex items-center mb-2 mt-2">
+                <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                    1
+                </div>
+                <div class="anek-latin-extralight text-[1.3vw]">
+                    Ini adalah <span class="font-bold">garis pembantu</span> kita dalam menentukan kapan harus membeli atau menjual.    
+                </div>
+            </div>
+
+            <!-- Poin 2 MACD -->
+            <div class="flex items-center mb-2">
+                <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                    2
+                </div>
+                <div class="anek-latin-extralight text-[1.3vw]">
+                    Peran: Kita membandingkan Garis MACD dengan Garis Sinyal untuk mendapatkan sinyal beli atau jual.
+                </div>
+            </div>
+            
+            <!-- Poin 3 MACD -->
+            <div class="flex items-center">
+                <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                    3
+                </div>
+                <div class="anek-latin-extralight text-[1.3vw]">
+                    Membeli saat RSI di bawah 30 bisa  <span class="font-bold">memberi kesempatan mendapatkan harga yang rendah sebelum naik kembali.</span>
+                </div>
+            </div>
+
+            <!-- histogram -->
+            <div class="flex mt-[1.5vw]">
+                <div class="flex justify-center items-center h-[3.5vw] w-[13vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                    <div class="anek-latin-bold text-[#F4E55A] ">Histogram</div>
+                </div>
+            </div>
+            <div class="flex items-center mt-2 mb-1">
+                <div class="bg-[#F4E55A] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2 text-black">
+                    1
+                </div>
+                <div class="anek-latin-extralight text-[1.3vw]">
+                    Histogram Positif (di atas nol): <span class="font-bold">Tren naik kuat.</span>
+                </div>
+            </div>
+            <div class="flex items-center mt-2">
+                <div class="bg-[#F4E55A] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2 text-black">
+                    2
+                </div>
+                <div class="anek-latin-extralight text-[1.3vw]">
+                    Histogram Negatif (di bawah nol): <span class="font-bold">Tren turun kuat.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        var macd_data = [
+            {
+                x: {{ dates|safe }},
+                y: {{ macd_values|safe }},
+                type: 'scatter',
+                mode: 'lines',
+                line: {color: '#00E676'},
+                name: 'MACD'
+            },
+            {
+                x: {{ dates|safe }},
+                y: {{ signal_values|safe }},
+                type: 'scatter',
+                mode: 'lines',
+                line: {color: '#FF1744'},
+                name: 'Signal'
+            },
+            {
+                x: {{ dates|safe }},
+                y: {{ histogram_positive|safe }},
+                type: 'bar',
+                name: 'Histogram Positive',
+                marker: {color: '#75B596'}
+            },
+            {
+                x: {{ dates|safe }},
+                y: {{ histogram_negative|safe }},
+                type: 'bar',
+                name: 'Histogram Negative',
+                marker: {color: '#E07C8F'}
+            }
+        ];
+
+        var macd_layout = {
+            yaxis: {
+                range: [-10, 10]
+            },
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
+            font: {
+                family: 'anek-latin-thin, sans-serif',
+                size: 12,
+                color: "white"
+            },
+            xaxis: {
+                color: "white",
+                showgrid: true,
+                rangeslider: {
+                    visible: true
+                }
+            },
+            yaxis: {
+                color: "white",
+                showgrid: true
+            },
+            width: 970,
+            height: 530
+        };
+
+        Plotly.newPlot('macd-chart', macd_data, macd_layout);
+    </script>
+
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        <-- DIV 7 - Bollinger Bands Chart -->
+        <div class="h-full mt-[7vw] mx-[9vw]">
+            <div class="flex items-center">
+                <div>
+                    <img src="{% static 'images/bollinger_bands.svg' %}" alt="bollinger_bands" srcset="" class="h-[3vw] mr-2">
+                </div>
+                <div class="flex items-center">
+                    <p class="anek-latin-semibold text-[3.6vw]">Bollinger Bands</p>
+                </div> 
+            </div>
+            <div class="flex mb-4 mt-[-0.5vw]">
+                <p class="anek-latin-thin text-[2vw]">Volatility indicator</p>
+            </div>
+            <div id="bollinger-bands-chart" class="h-[35vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+            </div>
+        </div>
+
+        <script>
+            var bollinger_bands_data = [
+            {
+                x: {{ dates|safe }},
+                open: {{ open_prices|safe }},
+                high: {{ high_prices|safe }},
+                low: {{ low_prices|safe }},
+                close: {{ close_prices|safe }},
+                type: 'candlestick',
+                name: 'Candlestick'
+            },
+            {
+                x: {{ dates|safe }},
+                y: {{ middle_band|safe }},
+                type: 'scatter',
+                mode: 'lines',
+                line: {color: '#8A2BE2', dash: 'dash'},  // Warna ungu garis putus-putus
+                name: 'Middle Band'
+            },
+            {
+                x: {{ dates|safe }},
+                y: {{ upper_band|safe }},
+                type: 'scatter',
+                mode: 'lines',
+                line: {color: '#8A2BE2'},  // Warna ungu gelap
+                name: 'Upper Band',
+                fill: 'tonexty',
+                fillcolor: 'rgba(75, 0, 130, 0.2)'  // Warna ungu muda transparan
+            },
+            {
+                x: {{ dates|safe }},
+                y: {{ lower_band|safe }},
+                type: 'scatter',
+                mode: 'lines',
+                line: {color: '#8A2BE2'},  // Warna ungu gelap
+                name: 'Lower Band',
+                fill: 'tonexty',
+                fillcolor: 'rgba(75, 0, 130, 0.2)'  // Warna ungu muda transparan
+            }
+        ];
+
+        var bollinger_bands_layout = {
+            yaxis: {
+                range: [Math.min.apply(null, {{ low_prices|safe }}), Math.max.apply(null, {{ high_prices|safe }})]
+            },
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
+            font: {
+                family: 'anek-latin-thin, sans-serif',
+                size: 12,
+                color: "white"
+            },
+            xaxis: {
+                color: "white",
+                showgrid: true,
+                rangeslider: {
+                    visible: true
+                }
+            },
+            yaxis: {
+                color: "white",
+                showgrid: true
+            },
+            width: 970,
+            height: 500
+        };
+
+        Plotly.newPlot('bollinger-bands-chart', bollinger_bands_data, bollinger_bands_layout);
+    </script>
 </body>
 </html>

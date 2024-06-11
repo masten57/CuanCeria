@@ -82,10 +82,77 @@
 
 .font-outline-1 {
     -webkit-text-stroke: 1px white;
-}
+} 
 
 .bg-custom-blue-black {
   background: rgb(19,19,19);
   background: linear-gradient(180deg, rgba(19,19,19,1) 0%, rgba(23,41,94,1) 40%);
 }
 
+@keyframes dash-red {
+  from {
+      background-position: 0 0;
+  }
+  to {
+      background-position: 100% 0;
+  }
+}
+
+@keyframes dash-green {
+  from {
+      background-position: 0 0;
+  }
+  to {
+      background-position: 100% 0;
+  }
+}
+
+.red-dashed-line {
+  height: 4px;
+  width: 100%;
+  background-image: linear-gradient(to right, red 50%, transparent 50%);
+  background-size: 10px 2px;
+  animation: dash-red 14s linear infinite;
+}
+
+.green-dashed-line {
+  height: 4px;
+  width: 100%;
+  background-image: linear-gradient(to right, #34b093 50%, transparent 50%);
+  background-size: 10px 2px;
+  animation: dash-green 15s linear infinite;
+}
+
+@keyframes dash-red2 {
+  from {
+      background-position: 100% 0;
+  }
+  to {
+      background-position: 0 0;
+  }
+}
+
+@keyframes dash-green2 {
+  from {
+      background-position: 100% 0;
+  }
+  to {
+      background-position: 0 0;
+  }
+}
+
+.red-dashed-line2 {
+  height: 4px;
+  width: 100%;
+  background-image: linear-gradient(to right, red 50%, transparent 50%);
+  background-size: 10px 2px;
+  animation: dash-red2 14s linear infinite;
+}
+
+.green-dashed-line2 {
+  height: 4px;
+  width: 100%;
+  background-image: linear-gradient(to right, #00E676 50%, transparent 50%);
+  background-size: 10px 2px;
+  animation: dash-green2 15s linear infinite;
+}
