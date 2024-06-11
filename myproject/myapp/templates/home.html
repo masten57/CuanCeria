@@ -9,8 +9,8 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 </head>
-<body class="bg-gradient-to-b from-[#131313] to-[#17295e] via-[#131313] via-27% min-h-screen text-white">
-    <header class="p-6 flex justify-between items-center px-[6vw]">
+<body class="bg-custom-blue-black min-h-screen text-white">
+    <header class="fixed m-4 top-0 left-0 right-0 p-3 flex rounded-full justify-between items-center px-[6vw] shadow-lg bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 backdrop-blur-md z-50">
         <!-- logo -->
         <div class="anek-latin-semibold text-[3vw]">CuanCeria</div>
         <!-- Navbar -->
@@ -24,7 +24,7 @@
 
     <main class="w-full">     
     <!-- DIV 1 - INFORMASI SAHAM BCA -->
-        <div class="h-[30vw] mt-10 flex justify-center space-x-10 items-center">
+        <div class="h-[30vw] mt-[13vw] flex justify-center space-x-10 items-center">
             
             <!-- logo BCA -->
             <div class="p-5 bg-white rounded-2xl shadow-lg px-[4vw] h-full flex items-center">
@@ -53,7 +53,7 @@
         </div>
 
     <!-- DIV 2 - GRAFIK CANDLESTICK -->
-    <div class="h-[30vw] mt-32 flex justify-center space-x-10 items-center bg-yellow">
+    <div class="h-[30vw] mt-[15vw] flex justify-center space-x-10 items-center">
         <div class="">
             <!-- tulisan stock chart -->
             <div class="flex items-center">
@@ -62,7 +62,7 @@
             </div>
 
             <!-- isi time seriesnya -->
-            <div id="candlestick-chart" class="h-[40vw] w-[60vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10"></div>
+            <div id="candlestick-chart" class="h-[40vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10" >
             <script>
                 var data = [{
                     x: {{ dates|safe }},
@@ -80,10 +80,10 @@
                 var layout = {
                     dragmode: 'zoom',
                     margin: {
-                        r: 10,
-                        t: 25,
-                        b: 40,
-                        l: 60
+                        r: 0,
+                        t: 50,
+                        b: 50,
+                        l: 50
                     },
                     showlegend: false,
                     plot_bgcolor: "rgba(0,0,0,0)",
@@ -93,26 +93,27 @@
                     },
                     xaxis: {
                         rangeslider: {
-                            visible: false
+                            visible: true
                         },
                         color: "white",
-                        showgrid: false
+                        showgrid: true
                     },
                     yaxis: {
                         color: "white",
-                        showgrid: false
+                        showgrid: true
                     },
-                    width: 800,
-                    height: 400
+                    width: 950,
+                    height: 500
                 };
 
                 Plotly.newPlot('candlestick-chart', data, layout);
             </script>
+            </div>
         </div>
     </div>
     
     <!-- DIV 3 - DESKRIPSI -->
-    <div class="h-full mt-32 flex justify-center items-center my-10 mr-[7vw]">
+    <div class="h-full mt-[15vw] flex justify-center items-center my-10 mr-[7vw]">
         
         <!-- kiri -->
         <div class="mr-[-17vw] mb-[-10vw]">
@@ -126,14 +127,14 @@
                 <p class="anek-latin-semibold text-[4vw]">Description</p>
             </div>
             <div class="anek-latin-light h-full p-10 text-justify rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 pl-[10vw] text-[1.5vw]">
-                <p><span class="font-bold">PT Bank Central Asia Tbk (BCA)</span>, dengan kode saham BBCA, adalah <span class="font-bold">bank swasta terbesar di Indonesia</span> berdasarkan aset dan kapitalisasi pasar. Didirikan pada <span class="font-bold">10 Oktober 1955</span>, BCA telah mengalami beberapa perubahan nama dan mulai beroperasi sebagai bank pada 21 Februari 1957 di Jakarta. BCA diambil alih oleh pemerintah selama krisis moneter 1997-1998 dan melakukan <span class="font-bold">IPO pada tahun 2000</span> dengan harga Rp1.400 per saham.</p>
+                <p> <a href="https://www.bca.co.id/id/tentang-bca/Hubungan-Investor/Informasi-Saham"><span class="font-bold underline">PT Bank Central Asia Tbk (BCA)</span></a>, dengan kode saham BBCA, adalah <span class="font-bold">bank swasta terbesar di Indonesia</span> berdasarkan aset dan kapitalisasi pasar. Didirikan pada <span class="font-bold">10 Oktober 1955</span>, BCA telah mengalami beberapa perubahan nama dan mulai beroperasi sebagai bank pada 21 Februari 1957 di Jakarta. BCA diambil alih oleh pemerintah selama krisis moneter 1997-1998 dan melakukan <span class="font-bold">IPO pada tahun 2000</span> dengan harga Rp1.400 per saham.</p>
                 <p class="mt-5">BCA terus berkembang dengan menambah kantor cabang dan jaringan ATM serta memperkenalkan berbagai inovasi seperti layanan pembayaran tagihan di ATM, kartu ATM dengan fitur debet, ATM non tunai, dan ATM setoran tunai. Hingga Maret 2023, <span class="font-bold">BCA memiliki lebih dari 1.200 cabang dan 18.000 ATM di seluruh Indonesia</span>. Dengan sekitar 25.000 karyawan, BCA memiliki visi untuk menjadi bank pilihan utama yang berperan penting dalam perekonomian Indonesia.</p>
             </div>
         </div>
     </div>
 
     <!-- DIV 4 - DESKRIPSI -->
-    <div class="h-full my-[10vw] mx-[9vw]">
+    <div class="h-full my-[7vw] mx-[9vw]">
         
         <!-- tulisan news -->
         <div class="">
@@ -143,8 +144,7 @@
         <!-- isi news -->
         <div>
             <div class="anek-latin-light h-full p-10 pt-[8vw] text-justify rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
-            <!-- baris 1 -->
-            <!-- INI MASI BLOM KELARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR ntr mo tak benerin, lagi mager, masi belom imbang kiri tengah kanan-->
+            <!-- isi berita beritanya sementara pake dummy -->
             <div class="flex space-x-10">
                 <div class="anek-latin-light h-[22vw] p-5 text-center rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 text-[1.3vw]">
                     <img src="{% static 'images/gambar_test1.png' %}" alt="gambar 1" class="h-[12vw] rounded-lg mb-3">
