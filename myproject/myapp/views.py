@@ -7,14 +7,16 @@ import numpy as np
 import os
 import joblib
 from datetime import datetime, timedelta
-import datetime
 import yfinance as yf
 import matplotlib.pyplot as plt
 import io
 import base64
-import pandas as pd
-import numpy as np
 from .prednext import GrabDataForNextDayReg, GrabDataForNextDayClf
+import requests
+import logging
+
+# # Configure logging
+# logging.basicConfig(level=logging.DEBUG)
 
 def index(request):
     my_scaler = joblib.load('myapp/models/feature_scaler.gz')
@@ -26,7 +28,6 @@ def index(request):
     lstm_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_lstm)
     gru_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_gru)
     xgb_prediction = GrabDataForNextDayClf(my_classifier)
-    
 
     context = {
         'lstm_prediction': lstm_prediction,
@@ -67,6 +68,19 @@ def calculate_bollinger_bands(data, window=20, num_std_dev=2):
     data['Lower Band'] = data['Middle Band'] - (data['Std Dev'] * num_std_dev)
     return data
 
+def get_news(api_key, query="BBCA", page_size=8):
+    url = f'https://newsapi.org/v2/everything?q={query}&pageSize={page_size}&apiKey={api_key}'
+    response = requests.get(url)
+    logging.debug(f"NewsAPI response status: {response.status_code}")
+    if response.status_code == 200:
+        articles = response.json().get('articles', [])
+        logging.debug(f"NewsAPI articles received: {len(articles)}")
+        logging.debug(f"NewsAPI response content: {response.json()}")
+        return articles
+    else:
+        logging.error(f"Failed to fetch news: {response.text}")
+        return []
+
 def home(request):
     ticker = "BBCA.JK"
     stock_data = get_stock_data(ticker)
@@ -81,6 +95,22 @@ def home(request):
     prev_price = valid_data['Close'][-2]
     price_change = last_price - prev_price
     percent_change = (price_change / prev_price) * 100
+
+    # Load models and make predictions
+    my_scaler = joblib.load('myapp/models/feature_scaler.gz')
+    my_price_scaler = joblib.load('myapp/models/price_scaler.gz')
+    my_classifier = joblib.load('myapp/models/xgbc_v1.gz')
+    new_model_lstm = tf.keras.models.load_model('myapp/models/lstm_regmodel_v2.keras', compile=False)
+    new_model_gru = tf.keras.models.load_model('myapp/models/gru_regmodel_v1.keras', compile=False)
+
+    lstm_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_lstm)
+    gru_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_gru)
+    xgb_prediction = GrabDataForNextDayClf(my_classifier)
+
+    # Get news
+    api_key = 'b612d39849564d4e8dd52b29f088985a'
+    news_articles = get_news(api_key)
+    logging.debug(f"News articles in context: {len(news_articles)}")
 
     context = {
         'ticker': ticker,
@@ -99,7 +129,11 @@ def home(request):
         'histogram_negative': list(valid_data['Histogram_Negative'].fillna(0)),
         'middle_band': list(valid_data['Middle Band'].fillna(0)),
         'upper_band': list(valid_data['Upper Band'].fillna(0)),
-        'lower_band': list(valid_data['Lower Band'].fillna(0))
+        'lower_band': list(valid_data['Lower Band'].fillna(0)),
+        'lstm_prediction': lstm_prediction,
+        'gru_prediction': gru_prediction,
+        'xgb_prediction': xgb_prediction,
+        'news_articles': news_articles
     }
 
     return render(request, 'home.html', context)

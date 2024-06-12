@@ -382,5 +382,7 @@ import joblib
 # print(GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_lstm))
 
 # my_classifier = joblib.load('D:/Unair Semester 6/Machine Learning/CuanCeria/xgbc_v1.gz')
+# my_classifier = joblib.load('D:/Unair Semester 6/Machine Learning/CuanCeria/xgbc_v1.gz')
 
+# GrabDataForNextDayClf(my_classifier)
 # GrabDataForNextDayClf(my_classifier)

@@ -7,35 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CuanCeria</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body class="bg-custom-blue-black min-h-screen text-white">
     <header class="fixed m-4 top-0 left-0 right-0 p-3 flex rounded-full justify-between items-center px-[6vw] shadow-lg bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 backdrop-blur-md z-50">
         <!-- logo -->
         <div class="anek-latin-semibold text-[3vw]">CuanCeria</div>
         <!-- Navbar -->
         <nav class="space-x-10 text-xl">
-            <a href="#" class="hover:underline anek-latin-extralight text-[1.8vw]">Home</a>
-            <a href="#" class="hover:underline anek-latin-extralight text-[1.8vw]">Desc</a>
-            <a href="#" class="hover:underline anek-latin-extralight text-[1.8vw]">News</a>
-            <a href="#" class="hover:underline anek-latin-extralight text-[1.8vw]">Prediction</a>
+            <a href="#home-section" class="hover:underline anek-latin-extralight text-[1.8vw]">Home</a>
+            <a href="#description-section" class="hover:underline anek-latin-extralight text-[1.8vw]">Desc</a>
+            <a href="#news-section" class="hover:underline anek-latin-extralight text-[1.8vw]">News</a>
+            <a href="#stat-analyst-section" class="hover:underline anek-latin-extralight text-[1.8vw]">Stat Analyst</a>
+            <a href="#prediction-section" class="hover:underline anek-latin-extralight text-[1.8vw]">Prediction</a>
         </nav>
     </header>
 
     <main class="w-full">     
 
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+        <div id="home-section" class="invisible">test
+        </div>
 
-    <!-- DIV 1 - INFORMASI SAHAM BCA -->
-        <div class="h-[30vw] mt-[13vw] flex justify-center space-x-10 items-center">
-            
+        <!-- DIV 1 - INFORMASI SAHAM BCA -->
+        <div class="h-[30vw] mt-[11vw] flex justify-center space-x-10 items-center" id="info-section">
+        
             <!-- logo BCA -->
-            <div class="p-5 bg-white rounded-2xl shadow-lg px-[4vw] h-full flex items-center">
+            <div id="bca-logo" class="p-5 bg-white rounded-2xl shadow-lg px-[4vw] h-full flex items-center blurred">
                 <img src="{% static 'images/logo_bca_portrait.svg' %}" alt="BCA Logo" class="w-[9vw]">
             </div>
             
             <!-- Isi dari BCA -->
-            <div class="h-full pl-[5vw] pr-[17vw] rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+            <div id="bca-info" class="h-full pl-[5vw] pr-[17vw] rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 blurred">
                 <div class="flex-col">
                     <h1 class="text-[2.8vw] anek-latin-extralight">PT Bank Central Asia Tbk ({{ ticker }})</h1>
                     <p class="text-[5vw] anek-latin-semibold">{{ last_price }} <span class="text-[2vw]">IDR</span></p>
@@ -54,65 +58,107 @@
                 </div>
             </div>
         </div>
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var infoSection = document.getElementById('info-section');
+                var bcaLogo = document.getElementById('bca-logo');
+                var bcaInfo = document.getElementById('bca-info');
+    
+                function checkVisibility() {
+                    var rect = infoSection.getBoundingClientRect();
+                    var windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+                    
+                    if (rect.top <= windowHeight) {
+                        bcaLogo.classList.add('visible');
+                        bcaInfo.classList.add('visible');
+                    }
+                }
+    
+                window.addEventListener('scroll', checkVisibility);
+                checkVisibility(); // Initial check on page load
+            });
+        </script>
 
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
-    <!-- DIV 2 - GRAFIK CANDLESTICK -->
-    <div class="h-[30vw] mt-[15vw] flex justify-center space-x-10 items-center">
-        <div class="">
-            <!-- tulisan stock chart -->
-            <div class="flex items-center">
-                <p class="anek-latin-semibold text-[5vw]">Stock Chart </p>
-                <p class="font-bold font-outline-1 text-transparent text-[2vw] mt-[1.5vw] ml-[1vw]">Graph</p>
-            </div>
+<!-- DIV 2 - GRAFIK CANDLESTICK -->
+<div class="h-[30vw] mt-[15vw] flex justify-center space-x-10 items-center" id="chart-section">
+    <div class="">
+        <!-- tulisan stock chart -->
+        <div class="flex items-center">
+            <p class="anek-latin-semibold text-[5vw]">Stock Chart </p>
+            <p class="font-bold font-outline-custom-1 text-transparent text-[2vw] mt-[1.5vw] ml-[1vw]">Graph</p>
+        </div>
 
-            <!-- isi time seriesnya -->
-            <div id="candlestick-chart" class="h-[40vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10" >
-            <script>
-                var data = [{
-                    x: {{ dates|safe }},
-                    close: {{ close_prices|safe }},
-                    decreasing: {line: {color: 'red'}},
-                    high: {{ high_prices|safe }},
-                    increasing: {line: {color: 'green'}},
-                    low: {{ low_prices|safe }},
-                    open: {{ open_prices|safe }},
-                    type: 'candlestick',
-                    xaxis: 'x',
-                    yaxis: 'y'
-                }];
-
-                var layout = {
-                    dragmode: 'zoom',
-                    margin: {
-                        r: 0,
-                        t: 50,
-                        b: 50,
-                        l: 50
-                    },
-                    showlegend: false,
-                    plot_bgcolor: "rgba(0,0,0,0)",
-                    paper_bgcolor: "rgba(0,0,0,0)",
-                    font: {
-                        color: "white"
-                    },
-                    xaxis: {
-                        rangeslider: {
-                            visible: true
-                        },
-                        color: "white",
-                        showgrid: true
-                    },
-                    yaxis: {
-                        color: "white",
-                        showgrid: true
-                    },
-                    width: 950,
-                    height: 500
-                };
-
-                Plotly.newPlot('candlestick-chart', data, layout);
-            </script>
+        <!-- isi time seriesnya -->
+        <div id="candlestick-chart" class="h-[40vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 blurred" >
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var chartSection = document.getElementById('chart-section');
+                        var candlestickChart = document.getElementById('candlestick-chart');
+                
+                        function checkVisibility() {
+                            var rect = chartSection.getBoundingClientRect();
+                            var windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+                
+                            if (rect.top <= windowHeight) {
+                                candlestickChart.classList.add('visible');
+                
+                                // Inisialisasi grafik candlestick
+                                var data = [{
+                                    x: {{ dates|safe }},
+                                    close: {{ close_prices|safe }},
+                                    decreasing: {line: {color: 'red'}},
+                                    high: {{ high_prices|safe }},
+                                    increasing: {line: {color: 'green'}},
+                                    low: {{ low_prices|safe }},
+                                    open: {{ open_prices|safe }},
+                                    type: 'candlestick',
+                                    xaxis: 'x',
+                                    yaxis: 'y'
+                                }];
+                
+                                var layout = {
+                                    dragmode: 'zoom',
+                                    margin: {
+                                        r: 0,
+                                        t: 50,
+                                        b: 50,
+                                        l: 50
+                                    },
+                                    showlegend: false,
+                                    plot_bgcolor: "rgba(0,0,0,0)",
+                                    paper_bgcolor: "rgba(0,0,0,0)",
+                                    font: {
+                                        color: "white"
+                                    },
+                                    xaxis: {
+                                        rangeslider: {
+                                            visible: true
+                                        },
+                                        color: "white",
+                                        showgrid: true
+                                    },
+                                    yaxis: {
+                                        color: "white",
+                                        showgrid: true
+                                    },
+                                    width: 950,
+                                    height: 500
+                                };
+                
+                                Plotly.newPlot('candlestick-chart', data, layout);
+                                
+                                // Hapus event listener setelah animasi dan grafik telah diinisialisasi
+                                window.removeEventListener('scroll', checkVisibility);
+                            }
+                        }
+                
+                        window.addEventListener('scroll', checkVisibility);
+                        checkVisibility(); // Initial check on page load
+                    });
+                </script>
             </div>
         </div>
     </div>
@@ -120,7 +166,7 @@
  <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
    
     <!-- DIV 3 - DESKRIPSI -->
-    <div class="h-full mt-[15vw] flex justify-center items-center my-10 mr-[7vw]">
+    <div class="h-full mt-[15vw] flex justify-center items-center my-10 mr-[7vw]" id="description-section">
         
         <!-- kiri -->
         <div class="mr-[-17vw] mb-[-10vw]">
@@ -133,49 +179,102 @@
                 <img src="{% static 'images/logo_desc.svg' %}" alt="menara bca" class="w-[4vw]">
                 <p class="anek-latin-semibold text-[4vw]">Description</p>
             </div>
-            <div class="anek-latin-extralight h-full p-10 text-justify rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 pl-[10vw] text-[1.5vw]">
+            <div class="anek-latin-extralight h-full p-10 text-justify rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 pl-[10vw] text-[1.5vw] blurred">
                 <p> <a href="https://www.bca.co.id/id/tentang-bca/Hubungan-Investor/Informasi-Saham"><span class="font-bold underline">PT Bank Central Asia Tbk (BCA)</span></a>, dengan kode saham BBCA, adalah <span class="font-bold">bank swasta terbesar di Indonesia</span> berdasarkan aset dan kapitalisasi pasar. Didirikan pada <span class="font-bold">10 Oktober 1955</span>, BCA telah mengalami beberapa perubahan nama dan mulai beroperasi sebagai bank pada 21 Februari 1957 di Jakarta. BCA diambil alih oleh pemerintah selama krisis moneter 1997-1998 dan melakukan <span class="font-bold">IPO pada tahun 2000</span> dengan harga Rp1.400 per saham.</p>
                 <p class="mt-5">BCA terus berkembang dengan menambah kantor cabang dan jaringan ATM serta memperkenalkan berbagai inovasi seperti layanan pembayaran tagihan di ATM, kartu ATM dengan fitur debet, ATM non tunai, dan ATM setoran tunai. Hingga Maret 2023, <span class="font-bold">BCA memiliki lebih dari 1.200 cabang dan 18.000 ATM di seluruh Indonesia</span>. Dengan sekitar 25.000 karyawan, BCA memiliki visi untuk menjadi bank pilihan utama yang berperan penting dalam perekonomian Indonesia.</p>
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var descriptionSection = document.getElementById('description-section');
+    
+            function checkVisibility() {
+                var rect = descriptionSection.getBoundingClientRect();
+                var windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+    
+                if (rect.top <= windowHeight) {
+                    descriptionSection.querySelector('.blurred').classList.add('visible');
+                    
+                    // Hapus event listener setelah animasi selesai
+                    window.removeEventListener('scroll', checkVisibility);
+                }
+            }
+    
+            window.addEventListener('scroll', checkVisibility);
+            checkVisibility(); // Initial check on page load
+        });
+    </script>
+    
 
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
-    <!-- DIV 4 - DESKRIPSI -->
-    <div class="h-full my-[7vw] mx-[9vw]">
-        
+    <!-- DIV 4 - BERITA -->
+    <div id="news-section" class="h-full my-[7vw] mx-[9vw]">
         <!-- tulisan news -->
         <div class="">
             <img src="{% static 'images/news_text.svg' %}" alt="menara bca" class="w-[50vw] ml-[-8vw] mb-[-6.6vw]">
         </div>
-        
         <!-- isi news -->
         <div>
             <div class="anek-latin-light h-full p-10 pt-[8vw] text-justify rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
-            <!-- isi berita beritanya sementara pake dummy -->
-            <div class="flex space-x-10">
-                <div class="anek-latin-light h-[22vw] p-5 text-center rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 text-[1.3vw]">
-                    <img src="{% static 'images/gambar_test1.png' %}" alt="gambar 1" class="h-[12vw] rounded-lg mb-3">
-                    <a href="#" class="anek-latin-semibold hover:underline">5 Fakta Kebangkitan IHSG: Ada Pesta BCA Hingga Terbangnya Saham Bakrie</a>
-                </div>
-                <div class="anek-latin-light h-[22vw] p-5 text-center rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 text-[1.3vw]">
-                    <img src="{% static 'images/gambar_test1.png' %}" alt="gambar 2" class="h-[12vw] rounded-lg mb-3">
-                    <a href="#" class="anek-latin-semibold hover:underline">Saham BCA Favorit Investor Asing Selama Sepekan, TLKM Banyak Dijual</a>
-                </div>
-                <div class="anek-latin-light h-[22vw] p-5 text-center rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 text-[1.3vw]">
-                    <img src="{% static 'images/gambar_test1.png' %}" alt="gambar 2" class="h-[12vw] rounded-lg mb-3">
-                    <a href="#" class="anek-latin-semibold hover:underline">Saham BCA (BBCA) Banyak Dilepas Asing, Masih Menarik?</a>
-                </div>
+                {% for article in news_articles %}
+                    <div class="news-item mb-6  hover:scale-95 transform transition-transform duration-150">
+                        <a href="{{ article.url }}" target="_blank" class="flex items-center">
+                            <div class="news-image-container">
+                                {% if article.urlToImage %}
+                                    <img src="{{ article.urlToImage }}" alt="News Image" class="news-image">
+                                {% else %}
+                                    <img src="{% static 'images/default-news.jpg' %}" alt="Default News Image" class="news-image">
+                                {% endif %}
+                            </div>
+                            <div class="news-content">
+                                <h2 class="text-xl font-bold">{{ article.title }}</h2>
+                                <p class="text-sm">{{ article.description }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
+            <div class="flex justify-center mt-[2vw]">
+                <button id="show-more-btn" class="anek-latin-semibold block flex justify-center items-center cursor-pointer h-[3.5vw] w-[80vw] p-3 rounded-full text-[2vw] bg-[#F4E55A] hover:scale-105 transform transition-transform duration-150 text-black text-[1.3vw]">Show More</button>
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var newsItems = document.querySelectorAll('.news-item');
+            var showMoreBtn = document.getElementById('show-more-btn');
+            var itemsToShow = 2;
+
+            // Hide all news items initially
+            newsItems.forEach(function (item, index) {
+                if (index >= itemsToShow) {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show more items when the button is clicked
+            showMoreBtn.addEventListener('click', function () {
+                itemsToShow += 2;
+                newsItems.forEach(function (item, index) {
+                    if (index < itemsToShow) {
+                        item.style.display = 'flex';
+                    }
+                });
+
+                // Hide the button if all items are shown
+                if (itemsToShow >= newsItems.length) {
+                    showMoreBtn.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
     
-<!-- DIV 5 - RSI Chart -->
-    <div class="h-full mt-[7vw] mx-[9vw]">
+    <!-- DIV 5 - RSI Chart -->
+    <div id="stat-analyst-section" class="h-full mt-[7vw] mx-[9vw]">
         <div class="flex items-center">
             <div>
                 <img src="{% static 'images/rsi.svg' %}" alt="rsi" srcset="" class="h-[4vw] mr-2">
@@ -190,12 +289,12 @@
         <div id="rsi-chart" class="h-[35vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
         </div>
     </div>
-    
+
     <!-- RSI DESC -->
-    <div class="my-[3vw] mx-[9vw] h-full rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+    <div class="my-[3vw] mx-[9vw] h-full rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 blurred" id="rsi-desc">
         <div class="flex flex-col p-10">
             <div class="anek-latin-bold text-[3vw]">
-                Mamahami - <span class="font-bold font-outline-1 text-transparent text-[2.5vw]">RSI</span>
+                <span id="typing-text-1" class="typing-container blink-caret"></span> - <span class="font-bold font-outline-custom-1 text-transparent text-[2.5vw]">RSI</span>
             </div>
             <div class="text-[1.3vw] anek-latin-extralight text-justify">
                 RSI (Relative Strength Index) adalah indikator momentum yang digunakan dalam analisis teknikal untuk mengukur kecepatan dan perubahan pergerakan harga. Ini membantu <span class="font-bold">menentukan apakah suatu saham atau aset lainnya sedang overbought (terlalu banyak dibeli) atau oversold (terlalu banyak dijual)</span>
@@ -236,7 +335,8 @@
                         3
                     </div>
                     <div class="anek-latin-extralight text-[1.3vw]">
-                        Menjual saat RSI di atas 70 bisa <span class="font-bold">membantu mengamankan keuntungan sebelum harga turun.</span>                    </div>
+                        Menjual saat RSI di atas 70 bisa <span class="font-bold">membantu mengamankan keuntungan sebelum harga turun.</span>                    
+                    </div>
                 </div>
 
             <!-- RSI < 30 -->
@@ -279,6 +379,7 @@
             </div>
         </div>
     </div>
+
     <script>
         var rsi_data = [{
             x: {{ dates|safe }},
@@ -290,7 +391,6 @@
         }];
 
         var rsi_layout = {
-            // title: 'RSI (Relative Strength Index)',
             shapes: [
                 {
                     type: 'line',
@@ -343,222 +443,365 @@
         };
 
         Plotly.newPlot('rsi-chart', rsi_data, rsi_layout);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var rsiDesc = document.getElementById('rsi-desc');
+
+            function checkVisibility() {
+                var rect = rsiDesc.getBoundingClientRect();
+                var windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+
+                if (rect.top <= windowHeight) {
+                    rsiDesc.classList.add('visible');
+                    
+                    // Hapus event listener setelah animasi selesai
+                    window.removeEventListener('scroll', checkVisibility);
+                }
+            }
+
+            window.addEventListener('scroll', checkVisibility);
+            checkVisibility(); // Initial check on page load
+        });
     </script>
+
 
  <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
    
-    <!-- DIV 6 - MACD Chart -->
-    <div class="h-full mt-[7vw] mx-[9vw]">
+<!-- DIV 6 - MACD Chart -->
+<div class="h-full mt-[7vw] mx-[9vw]">
+    <div class="flex items-center">
+        <div>
+            <img src="{% static 'images/macd.svg' %}" alt="macd" srcset="" class="h-[3vw] mr-2">
+        </div>
         <div class="flex items-center">
-            <div>
-                <img src="{% static 'images/macd.svg' %}" alt="macd" srcset="" class="h-[3vw] mr-2">
+            <p class="anek-latin-semibold text-[3.6vw]">MACD (Moving Average Convergence Divergence)</p>
+        </div> 
+    </div>
+    <div class="flex mb-4 mt-[-0.5vw]">
+        <p class="anek-latin-thin text-[2vw]">Trend-following momentum indicator</p>
+    </div>
+    <div id="macd-chart" class="h-[35vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+    </div>
+</div>
+
+<!-- MACD DESC -->
+<div class="my-[3vw] mx-[9vw] h-full rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 blurred" id="macd-desc">
+    <div class="flex flex-col p-10">
+        <div class="anek-latin-bold text-[3vw]">
+            <span id="typing-text-2" class="typing-container blink-caret"></span> - <span class="font-bold font-outline-custom-1 text-transparent text-[2.5vw]">MACD</span>
+        </div>
+        <div class="text-[1.3vw] anek-latin-extralight text-justify">
+            MACD (Moving Average Convergence Divergence) adalah alat yang membantu trader dalam beberapa hal seperti <span class="font-bold">mengetahui tren harga </span> yang sedang berlangsung, <span class="font-bold">memahami momentum harga</span> yang sedang terjadi, dan <span class="font-bold">menentukan kapan harus membeli atau menjual </span> saham yang memiliki beberapa komponen utama seperti moving average, kejadian convergence, dan kejadian divergence
+        </div>
+
+        <!-- MACD LINE -->
+        <div class="flex mt-[1.5vw]">
+            <div class="flex justify-center items-center h-[3.5vw] w-[22vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                <div class="anek-latin-bold text-[#00E676]">Garis MACD (MACD Line)</div>
             </div>
-            <div class="flex items-center">
-                <p class="anek-latin-semibold text-[3.6vw]">MACD (Moving Average Convergence Divergence)</p>
-            </div> 
+            <div class="bg-white my-2 rounded-xl w-full ml-2 flex justify-center items-center">
+                <div class="green-dashed-line2"></div>
+            </div>
         </div>
-        <div class="flex mb-4 mt-[-0.5vw]">
-            <p class="anek-latin-thin text-[2vw]">Trend-following momentum indicator</p>
+        <!-- Poin 1 MACD -->
+        <div class="flex items-center mb-2 mt-2">
+            <div class="text-black bg-[#00E676] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                1
+            </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Ini adalah <span class="font-bold">garis utama</span> yang kita perhatikan.
+            </div>
         </div>
-        <div id="macd-chart" class="h-[35vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+
+        <!-- Poin 2 MACD -->
+        <div class="flex items-center mb-2">
+            <div class="text-black bg-[#00E676] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                2
+            </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Sinyal Beli: <span class="font-bold"><span class="text-[#00E676]">Garis MACD</span> naik di atas <span class="text-[#F72D13]">Garis Sinyal</span></span>, harga kemungkinan akan naik.
+            </div>
+        </div>
+        
+        <!-- Poin 3 MACD -->
+        <div class="flex items-center">
+            <div class="text-black bg-[#00E676] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                3
+            </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Sinyal Jual: <span class="font-bold"><span class="text-[#00E676]">Garis MACD</span> naik di bawah <span class="text-[#F72D13]">Garis Sinyal</span></span>, harga kemungkinan akan turun.
+            </div>
+        </div>
+
+        <!-- SIGNAL LINE -->
+        <div class="flex mt-[1.5vw]">
+            <div class="flex justify-center items-center h-[3.5vw] w-[22vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                <div class="anek-latin-bold text-[#E21A00]">Garis Sinyal (Signal Line)</div>
+            </div>
+            <div class="bg-white my-2 rounded-xl w-full ml-2 flex justify-center items-center">
+                <div class="red-dashed-line2"></div><!-- kasih garis patah patah warna merah gerak dari kiri ke kanan gitu kayak animasi -->
+            </div>
+        </div>
+        <!-- Poin 1 MACD -->
+        <div class="flex items-center mb-2 mt-2">
+            <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                1
+            </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Ini adalah <span class="font-bold">garis pembantu</span> kita dalam menentukan kapan harus membeli atau menjual.    
+            </div>
+        </div>
+
+        <!-- Poin 2 MACD -->
+        <div class="flex items-center mb-2">
+            <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                2
+            </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Peran: Kita membandingkan Garis MACD dengan Garis Sinyal untuk mendapatkan sinyal beli atau jual.
+            </div>
+        </div>
+        
+        <!-- Poin 3 MACD -->
+        <div class="flex items-center">
+            <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                3
+            </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Membeli saat RSI di bawah 30 bisa  <span class="font-bold">memberi kesempatan mendapatkan harga yang rendah sebelum naik kembali.</span>
+            </div>
+        </div>
+
+        <!-- histogram -->
+        <div class="flex mt-[1.5vw]">
+            <div class="flex justify-center items-center h-[3.5vw] w-[13vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                <div class="anek-latin-bold text-[#F4E55A]">Histogram</div>
+            </div>
+        </div>
+        <div class="flex items-center mt-2 mb-1">
+            <div class="bg-[#F4E55A] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2 text-black">
+                1
+            </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Histogram Positif (di atas nol): <span class="font-bold">Tren naik kuat.</span>
+            </div>
+        </div>
+        <div class="flex items-center mt-2">
+            <div class="bg-[#F4E55A] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2 text-black">
+                2
+            </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Histogram Negatif (di bawah nol): <span class="font-bold">Tren turun kuat.</span>
+            </div>
         </div>
     </div>
-    
-    <!-- MACD DESC -->
-    <div class="my-[3vw] mx-[9vw] h-full rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
-        <div class="flex flex-col p-10">
-            <div class="anek-latin-bold text-[3vw]">
-                Mamahami - <span class="font-bold font-outline-1 text-transparent text-[2.5vw]">MACD</span>
+</div>
+
+<script>
+    var macd_data = [
+        {
+            x: {{ dates|safe }},
+            y: {{ macd_values|safe }},
+            type: 'scatter',
+            mode: 'lines',
+            line: {color: '#00E676'},
+            name: 'MACD'
+        },
+        {
+            x: {{ dates|safe }},
+            y: {{ signal_values|safe }},
+            type: 'scatter',
+            mode: 'lines',
+            line: {color: '#FF1744'},
+            name: 'Signal'
+        },
+        {
+            x: {{ dates|safe }},
+            y: {{ histogram_positive|safe }},
+            type: 'bar',
+            name: 'Histogram Positive',
+            marker: {color: '#75B596'}
+        },
+        {
+            x: {{ dates|safe }},
+            y: {{ histogram_negative|safe }},
+            type: 'bar',
+            name: 'Histogram Negative',
+            marker: {color: '#E07C8F'}
+        }
+    ];
+
+    var macd_layout = {
+        yaxis: {
+            range: [-10, 10]
+        },
+        plot_bgcolor: "rgba(0,0,0,0)",
+        paper_bgcolor: "rgba(0,0,0,0)",
+        font: {
+            family: 'anek-latin-thin, sans-serif',
+            size: 12,
+            color: "white"
+        },
+        xaxis: {
+            color: "white",
+            showgrid: true,
+            rangeslider: {
+                visible: true
+            }
+        },
+        yaxis: {
+            color: "white",
+            showgrid: true
+        },
+        width: 970,
+        height: 530
+    };
+
+    Plotly.newPlot('macd-chart', macd_data, macd_layout);
+
+    // Animasi pop-up saat div muncul ke dalam viewport
+    document.addEventListener('DOMContentLoaded', function() {
+        var macdDesc = document.getElementById('macd-desc');
+
+        function checkVisibility() {
+            var rect = macdDesc.getBoundingClientRect();
+            var windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+            var windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+
+            // Cek apakah elemen berada di dalam viewport
+            if (
+                (rect.top <= windowHeight) &&
+                ((rect.left + rect.width) >= 0) &&
+                (rect.top + rect.height) >= 0 &&
+                (rect.left <= windowWidth)
+            ) {
+                macdDesc.classList.add('visible');
+                window.removeEventListener('scroll', checkVisibility);
+            }
+        }
+
+        window.addEventListener('scroll', checkVisibility);
+        checkVisibility(); // Initial check on page load
+    });
+</script>
+
+
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        <!-- DIV 7 - Bollinger Bands Chart -->
+<div class="h-full mt-[7vw] mx-[9vw]">
+    <div class="flex items-center">
+        <div>
+            <img src="{% static 'images/bollinger_bands.svg' %}" alt="bollinger_bands" srcset="" class="h-[3vw] mr-2">
+        </div>
+        <div class="flex items-center">
+            <p class="anek-latin-semibold text-[3.6vw]">Bollinger Bands</p>
+        </div>
+    </div>
+    <div class="flex mb-4 mt-[-0.5vw]">
+        <p class="anek-latin-thin text-[2vw]">Volatility indicator</p>
+    </div>
+    <div id="bollinger-bands-chart" class="h-[35vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10"></div>
+</div>
+
+<!-- BolBan DESC -->
+<div class="my-[3vw] mx-[9vw] h-full rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 blurred" id="bollinger-bands-desc">
+    <div class="flex flex-col p-10">
+        <div class="anek-latin-bold text-[3vw]">
+            <span id="typing-text-3" class="typing-container blink-caret"></span> - <span class="font-bold font-outline-custom-1 text-transparent text-[2.5vw]">Bollinger Bands</span>
+        </div>
+        <div class="text-[1.3vw] anek-latin-extralight text-justify">
+            Bollinger Bands adalah alat analisis teknikal yang sering digunakan dalam perdagangan saham <span class="font-bold">untuk memahami volatilitas dan potensi pergerakan harga saham.</span> Bollinger Bands membantu trader <span class="font-bold">menentukan apakah harga saham relatif tinggi atau rendah</span> dibandingkan dengan sejarah harga sebelumnya                
+        </div>
+
+        <!-- BolBan isi -->
+        <div class="flex mt-[1.5vw]">
+            <div class="h-full rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+                <img src="{% static 'images/bolban.svg' %}" alt="" srcset="" class="w-[50vw] hover:scale-95 transform transition-transform duration-150">
             </div>
-            <div class="text-[1.3vw] anek-latin-extralight text-justify">
-                MACD (Moving Average Convergence Divergence) adalah alat yang membantu trader dalam beberapa hal seperti <span class="font-bold">mengetahui tren harga </span> yang sedang berlangsung, <span class="font-bold">memahami momentum harga</span> yang sedang terjadi, dan <span class="font-bold">menentukan kapan harus membeli atau menjual </span> saham yang memiliki beberapa komponen utama seperti moving average, kejadian convergence, dan kejadian divergence
-            
-            <!-- MACD LINE -->
-            <div class="flex mt-[1.5vw]">
-                <div class="flex justify-center items-center h-[3.5vw] w-[22vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
-                    <div class="anek-latin-bold text-[#00E676] ">Garis MACD (MACD Line)</div>
-                </div>
-                <div class="bg-white my-2 rounded-xl w-full ml-2 flex justify-center items-center">
-                    <div class="green-dashed-line2"></div>
-                </div>
-            </div>
-                <!-- Poin 1 MACD -->
-                <div class="flex items-center mb-2 mt-2">
-                    <div class="text-black bg-[#00E676] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+            <div class="ml-4 flex flex-col justify-center items-center space-y-5">
+                <!-- Poin 1 BolBan -->
+                <div class="flex items-center">
+                    <div class="text-white bg-[#8B2BE4] rounded-full h-[2vw] w-[3.2vw] flex items-center justify-center anek-latin-regular mr-2">
                         1
                     </div>
                     <div class="anek-latin-extralight text-[1.3vw]">
-                        Ini adalah <span class="font-bold">garis utama</span> yang kita perhatikan.
+                        Upper Band: Menunjukkan batas atas dari harga saham yang diharapkan <span class="font-bold">(Dua kali standar deviasi di atas garis tengah)</span>
                     </div>
                 </div>
 
-                <!-- Poin 2 RSI -->
-                <div class="flex items-center mb-2">
-                    <div class="text-black bg-[#00E676] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                <!-- Poin 2 BolBan -->
+                <div class="flex items-center">
+                    <div class="text-white bg-[#8B2BE4] rounded-full h-[2vw] w-[3vw] flex items-center justify-center anek-latin-regular mr-2">
                         2
                     </div>
                     <div class="anek-latin-extralight text-[1.3vw]">
-                        Sinyal Beli: <span class="font-bold"><span class="text-[#00E676]">Garis MACD</span> naik di atas <span class="text-[#F72D13]">Garis Sinyal</span></span>, harga kemungkinan akan naik.</div>
+                        Middle Band: simple moving average (SMA) dari harga penutupan saham  <span class="font-bold">(Rata-rata harga saham selama 20 hari)</span>
+                    </div>
                 </div>
-                
-                <!-- Poin 3 RSI -->
+
+                <!-- Poin 3 BolBan -->
                 <div class="flex items-center">
-                    <div class="text-black bg-[#00E676] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                    <div class="text-white bg-[#8B2BE4] rounded-full h-[2vw] w-[3.2vw] flex items-center justify-center anek-latin-regular mr-2">
                         3
                     </div>
                     <div class="anek-latin-extralight text-[1.3vw]">
-                        Sinyal Jual: <span class="font-bold"><span class="text-[#00E676]">Garis MACD</span> naik di bawah <span class="text-[#F72D13]">Garis Sinyal</span></span>, harga kemungkinan akan turun.</div>
+                        Lower Band: Menunjukkan batas atas dari harga saham yang diharapkan <span class="font-bold">(Dua kali standar deviasi di bawah garis tengah)</span>
+                    </div>
                 </div>
+            </div>
+        </div>
 
-            <!-- SIGNAL LINE -->
-            <div class="flex mt-[1.5vw]">
-                <div class="flex justify-center items-center h-[3.5vw] w-[22vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
-                    <div class="anek-latin-bold text-[#E21A00]">Garis Sinyal (Signal Line)</div>
-                </div>
-                <div class="bg-white my-2 rounded-xl w-full ml-2 flex justify-center items-center">
-                    <div class="red-dashed-line2"></div><!-- kasih garis patah patah warna merah gerak dari kiri ke kanan gitu kayak animasi -->
-                </div>
+        <!-- SINYAL BELI -->
+        <div class="flex mt-[1.5vw]">
+            <div class="flex justify-center items-center h-[3.5vw] w-[13vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                <div class="anek-latin-bold text-[#E21A00]">Sinyal Beli</div>
             </div>
-            <!-- Poin 1 MACD -->
-            <div class="flex items-center mb-2 mt-2">
-                <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
-                    1
-                </div>
-                <div class="anek-latin-extralight text-[1.3vw]">
-                    Ini adalah <span class="font-bold">garis pembantu</span> kita dalam menentukan kapan harus membeli atau menjual.    
-                </div>
+        </div>
+        <div class="flex items-center mb-2 mt-2">
+            <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                1
             </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Jika <span class="font-bold">harga menyentuh lower band </span> dan <span class="font-bold">kemudian berbalik arah naik menuju middle band</span>, ini bisa menjadi sinyal untuk membeli.                    
+            </div>
+        </div>
+        <div class="flex items-center mb-2">
+            <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
+                2
+            </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                <span class="font-bold">Konfirmasi dengan indikator lain</span> seperti RSI yang menunjukkan kondisi overbought (biasanya di atas 70)                    
+            </div>
+        </div>
 
-            <!-- Poin 2 MACD -->
-            <div class="flex items-center mb-2">
-                <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
-                    2
-                </div>
-                <div class="anek-latin-extralight text-[1.3vw]">
-                    Peran: Kita membandingkan Garis MACD dengan Garis Sinyal untuk mendapatkan sinyal beli atau jual.
-                </div>
+        <!-- SINYAL JUAL -->
+        <div class="flex mt-[1.5vw]">
+            <div class="flex justify-center items-center h-[3.5vw] w-[13vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
+                <div class="anek-latin-bold text-[#089981]">Sinyal Jual</div>
             </div>
-            
-            <!-- Poin 3 MACD -->
-            <div class="flex items-center">
-                <div class="bg-[#E21A00] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2">
-                    3
-                </div>
-                <div class="anek-latin-extralight text-[1.3vw]">
-                    Membeli saat RSI di bawah 30 bisa  <span class="font-bold">memberi kesempatan mendapatkan harga yang rendah sebelum naik kembali.</span>
-                </div>
+        </div>
+        <div class="flex items-center mt-2 mb-1">
+            <div class="bg-[#089981] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2 text-black">
+                1
             </div>
-
-            <!-- histogram -->
-            <div class="flex mt-[1.5vw]">
-                <div class="flex justify-center items-center h-[3.5vw] w-[13vw] p-3 rounded-full text-[1.3vw] bg-black hover:scale-105 transform transition-transform duration-150">
-                    <div class="anek-latin-bold text-[#F4E55A] ">Histogram</div>
-                </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                Jika <span class="font-bold">harga saham mendekati atau menyentuh upper band</span>, ini bisa menjadi tanda untuk menjual karena harga mungkin akan turun.
             </div>
-            <div class="flex items-center mt-2 mb-1">
-                <div class="bg-[#F4E55A] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2 text-black">
-                    1
-                </div>
-                <div class="anek-latin-extralight text-[1.3vw]">
-                    Histogram Positif (di atas nol): <span class="font-bold">Tren naik kuat.</span>
-                </div>
+        </div>
+        <div class="flex items-center mt-2">
+            <div class="bg-[#089981] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2 text-black">
+                2
             </div>
-            <div class="flex items-center mt-2">
-                <div class="bg-[#F4E55A] rounded-full h-[2vw] w-[2vw] flex items-center justify-center anek-latin-regular mr-2 text-black">
-                    2
-                </div>
-                <div class="anek-latin-extralight text-[1.3vw]">
-                    Histogram Negatif (di bawah nol): <span class="font-bold">Tren turun kuat.</span>
-                </div>
+            <div class="anek-latin-extralight text-[1.3vw]">
+                <span class="font-bold">Perhatikan volume perdagangan</span>. Penurunan volume bisa memperkuat sinyal penjualan.
             </div>
         </div>
     </div>
 </div>
 
     <script>
-        var macd_data = [
-            {
-                x: {{ dates|safe }},
-                y: {{ macd_values|safe }},
-                type: 'scatter',
-                mode: 'lines',
-                line: {color: '#00E676'},
-                name: 'MACD'
-            },
-            {
-                x: {{ dates|safe }},
-                y: {{ signal_values|safe }},
-                type: 'scatter',
-                mode: 'lines',
-                line: {color: '#FF1744'},
-                name: 'Signal'
-            },
-            {
-                x: {{ dates|safe }},
-                y: {{ histogram_positive|safe }},
-                type: 'bar',
-                name: 'Histogram Positive',
-                marker: {color: '#75B596'}
-            },
-            {
-                x: {{ dates|safe }},
-                y: {{ histogram_negative|safe }},
-                type: 'bar',
-                name: 'Histogram Negative',
-                marker: {color: '#E07C8F'}
-            }
-        ];
-
-        var macd_layout = {
-            yaxis: {
-                range: [-10, 10]
-            },
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
-            font: {
-                family: 'anek-latin-thin, sans-serif',
-                size: 12,
-                color: "white"
-            },
-            xaxis: {
-                color: "white",
-                showgrid: true,
-                rangeslider: {
-                    visible: true
-                }
-            },
-            yaxis: {
-                color: "white",
-                showgrid: true
-            },
-            width: 970,
-            height: 530
-        };
-
-        Plotly.newPlot('macd-chart', macd_data, macd_layout);
-    </script>
-
-<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-        <-- DIV 7 - Bollinger Bands Chart -->
-        <div class="h-full mt-[7vw] mx-[9vw]">
-            <div class="flex items-center">
-                <div>
-                    <img src="{% static 'images/bollinger_bands.svg' %}" alt="bollinger_bands" srcset="" class="h-[3vw] mr-2">
-                </div>
-                <div class="flex items-center">
-                    <p class="anek-latin-semibold text-[3.6vw]">Bollinger Bands</p>
-                </div> 
-            </div>
-            <div class="flex mb-4 mt-[-0.5vw]">
-                <p class="anek-latin-thin text-[2vw]">Volatility indicator</p>
-            </div>
-            <div id="bollinger-bands-chart" class="h-[35vw] w-[80vw] p-5 rounded-3xl shadow-lg flex items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
-            </div>
-        </div>
-
-        <script>
-            var bollinger_bands_data = [
+        var bollinger_bands_data = [
             {
                 x: {{ dates|safe }},
                 open: {{ open_prices|safe }},
@@ -611,20 +854,310 @@
             },
             xaxis: {
                 color: "white",
-                showgrid: true,
+                showgrid: false,
                 rangeslider: {
                     visible: true
                 }
             },
             yaxis: {
                 color: "white",
-                showgrid: true
+                showgrid: false
             },
             width: 970,
             height: 500
         };
 
         Plotly.newPlot('bollinger-bands-chart', bollinger_bands_data, bollinger_bands_layout);
+
+        // Animasi pop-up saat div muncul ke dalam viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            var bollingerBandsDesc = document.getElementById('bollinger-bands-desc');
+
+            function checkVisibility() {
+                var rect = bollingerBandsDesc.getBoundingClientRect();
+                var windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+                var windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+
+                // Cek apakah elemen berada di dalam viewport
+                if (
+                    (rect.top <= windowHeight) &&
+                    ((rect.left + rect.width) >= 0) &&
+                    (rect.top + rect.height) >= 0 &&
+                    (rect.left <= windowWidth)
+                ) {
+                    bollingerBandsDesc.classList.add('visible');
+                    window.removeEventListener('scroll', checkVisibility);
+                }
+            }
+
+            window.addEventListener('scroll', checkVisibility);
+            checkVisibility(); // Initial check on page load
+        });
     </script>
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+    
+    <!-- DIV 8 - HASIL PREDIKSI -->
+    <div id="prediction-section" class="h-full mt-[7vw] mx-[9vw]">
+        <div class="flex items-center">
+            <div>
+                <img src="{% static 'images/bollinger_bands.svg' %}" alt="bollinger_bands" class="h-[3vw] mr-2 blurred">
+            </div>
+            <div class="flex items-center">
+                <p class="anek-latin-semibold text-[3.6vw] blurred">Prediction Stock for 1 day</p>
+            </div> 
+        </div>
+        <div class="flex mb-4 mt-[-0.5vw]">
+            <p class="anek-latin-thin text-[2vw] blurred">Using LSTM and GRU model</p>
+        </div>
+
+        <!-- SLIDER CARD NYA -->
+        <div class="h-[8vw] w-[80vw] p-5 rounded-[2.5vw] shadow-lg flex justify-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 blurred">
+            <div class="flex justify-center w-full">
+                <div id="tab-lstm" class="tab active-lstm text-[2.5vw] anek-latin-semibold flex justify-center items-center rounded-[2vw] w-[40vw] hover:scale-105" onclick="showTab('lstm')">LSTM</div>
+                <div id="tab-gru" class="tab text-[2.5vw] anek-latin-semibold flex justify-center items-center rounded-[2vw] w-[40vw] hover:scale-105" onclick="showTab('gru')">GRU</div>
+            </div>
+        </div>
+
+        <!-- ISI CARD NYA -->
+        <div id="lstm" class="tab-content active blurred">
+            <div class="card lstm mt-[2vw] h-[15vw] w-[80vw] p-5 rounded-3xl shadow-lg flex justify-center items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+                <div class="w-full pl-[7vw]">
+                    <p class="text-[2vw] anek-latin-extralight mb-[-1vw]">Price Now</p>
+                    <div class="flex items-center">
+                        <p class="text-[4vw] anek-latin-semibold">{{ last_price }}</p>
+                        <p class="text-[2vw] anek-latin-semibold ml-[0.5vw] mt-[1.5vw]">IDR</p>
+                    </div>
+                </div>
+                <div class="flex flex-col w-full pl-[7vw]">
+                    <p class="text-[2vw] anek-latin-extralight mb-[-1vw]">Predic Next Day LSTM</p>
+                    <div class="flex items-center">
+                        <p id="lstm_prediction" class="text-[4vw] anek-latin-semibold prediction"><i id="lstm_arrow" class="arrow mr-[0.8vw] mt-1 h-[-10vw]"></i>{{ lstm_prediction }}</p>
+                        <p class="text-[2vw] anek-latin-semibold ml-[0.5vw] mt-[1vw]">IDR</p>
+                    </div>                        
+                </div>
+            </div>
+        </div>
+
+        <div id="gru" class="tab-content blurred">
+            <div class="card gru mt-[2vw] h-[15vw] w-[80vw] p-5 rounded-3xl shadow-lg flex justify-center items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10">
+                <div class="w-full pl-[7vw]">
+                    <p class="text-[2vw] anek-latin-extralight mb-[-1vw]">Price Now</p>
+                    <div class="flex items-center">
+                        <p class="text-[4vw] anek-latin-semibold">{{ last_price }}</p>
+                        <p class="text-[2vw] anek-latin-semibold ml-[0.5vw] mt-[1.5vw]">IDR</p>
+                    </div>
+                </div>
+                <div class="flex flex-col w-full pl-[7vw]">
+                    <p class="text-[2vw] anek-latin-extralight mb-[-1vw]">Predic Next Day LSTM</p>
+                    <div class="flex items-center">
+                        <p id="gru_prediction" class="text-[4vw] anek-latin-semibold prediction"><i id="gru_arrow" class="arrow mr-[0.8vw] mt-1 h-[-10vw]"></i>{{ gru_prediction }}</p>
+                        <p class="text-[2vw] anek-latin-semibold ml-[0.5vw] mt-[1vw]">IDR</p>
+                    </div>                        
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-[2vw] mb-[10vw] h-[17vw] w-[80vw] p-5 rounded-3xl shadow-lg flex flex-col items-center bg-gray-400 backdrop-filter background-blur-md bg-opacity-10 border border-gray-100 border-opacity-10 blurred">
+            <div class="bg-[#97D4E1] w-full p-3 rounded-[2.5vw] shadow-lg flex justify-center hover:scale-105 transform transition-transform duration-150">
+                <p class="anek-latin-semibold text-[2.5vw] text-black ">Classification with XGBoost</p>
+            </div>
+            <div class="anek-latin-extralight text-[2vw] mt-[3vw]">
+                Menurut prediksi model XGBoost, nilai saham besok akan <span id="xgb_result" class="anek-latin-bold"></span>                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            const predictions = document.querySelectorAll('.prediction');
+            const lastPrice = parseFloat("{{ last_price }}");
+
+            tabs.forEach(t => {
+                t.classList.remove('active-lstm', 'active-gru');
+                t.style.backgroundColor = 'transparent'; // Set to transparent
+            });
+            contents.forEach(c => c.classList.remove('active'));
+
+            document.querySelector(`#${tab}`).classList.add('active');
+            const activeTab = document.querySelector(`#tab-${tab}`);
+            activeTab.classList.add(`active-${tab}`);
+            if (tab === 'lstm') {
+                activeTab.style.backgroundColor = '#6A0DAD'; // Ungu
+            } else {
+                activeTab.style.backgroundColor = '#FFD700'; // Kuning
+            }
+
+            predictions.forEach(p => {
+                const predictionValue = parseFloat(p.textContent.replace('IDR', '').trim());
+                const arrow = p.querySelector('.arrow');
+                if (predictionValue > lastPrice) {
+                    p.classList.add('up');
+                    p.classList.remove('down');
+                    arrow.classList.add('fa', 'fa-arrow-up');
+                    arrow.classList.remove('fa-arrow-down');
+                    arrow.style.color = '#00E676';
+                } else {
+                    p.classList.add('down');
+                    p.classList.remove('up');
+                    arrow.classList.add('fa', 'fa-arrow-down');
+                    arrow.classList.remove('fa-arrow-up');
+                    arrow.style.color = 'red';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const predictions = document.querySelectorAll('.prediction');
+            const lastPrice = parseFloat("{{ last_price }}");
+
+            predictions.forEach(p => {
+                const predictionValue = parseFloat(p.textContent.replace('IDR', '').trim());
+                const arrow = p.querySelector('.arrow');
+                if (predictionValue > lastPrice) {
+                    p.classList.add('up');
+                    p.classList.remove('down');
+                    arrow.classList.add('fa', 'fa-arrow-up');
+                    arrow.classList.remove('fa-arrow-down');
+                    arrow.style.color = '#00E676';
+                } else {
+                    p.classList.add('down');
+                    p.classList.remove('up');
+                    arrow.classList.add('fa', 'fa-arrow-down');
+                    arrow.classList.remove('fa-arrow-up');
+                    arrow.style.color = 'red';
+                }
+            });
+
+            const xgbPrediction = "{{ xgb_prediction }}"; // Ambil nilai prediksi dari konteks Django
+            const xgbResult = document.getElementById('xgb_result');
+
+            if (xgbPrediction.toLowerCase() === 'up') {
+                xgbResult.textContent = 'NAIK';
+                xgbResult.classList.add('up');
+                xgbResult.classList.remove('down');
+            } else if (xgbPrediction.toLowerCase() === 'down') {
+                xgbResult.textContent = 'TURUN';
+                xgbResult.classList.add('down');
+                xgbResult.classList.remove('up');
+            }
+
+            function checkVisibility() {
+                const blurredElements = document.querySelectorAll('.blurred');
+                blurredElements.forEach(element => {
+                    const rect = element.getBoundingClientRect();
+                    const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+                    if (rect.top <= windowHeight) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', checkVisibility);
+            checkVisibility(); // Initial check on page load
+        });
+    </script>
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+    <script>
+        // Optional: Enhance smooth scrolling with JavaScript if needed
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    <!----------------------------- Animasi ngetik ---------------------------------------->
+    <script>
+        const texts1 = ["Memahami", "Menyelami", "Mempelajari", "Mengetahui"];
+        const texts2 = ["Memahami", "Menyelami", "Mempelajari", "Mengetahui"];
+        const texts3 = ["Memahami", "Menyelami", "Mempelajari", "Mengetahui"];
+        let currentTextIndex1 = 0;
+        let currentCharIndex1 = 0;
+        let currentTextIndex2 = 0;
+        let currentCharIndex2 = 0;
+        let currentTextIndex3 = 0;
+        let currentCharIndex3 = 0;
+        const typingTextElement1 = document.getElementById('typing-text-1');
+        const typingTextElement2 = document.getElementById('typing-text-2');
+        const typingTextElement3 = document.getElementById('typing-text-3');
+
+        function typeText1() {
+            if (currentCharIndex1 < texts1[currentTextIndex1].length) {
+                typingTextElement1.textContent += texts1[currentTextIndex1].charAt(currentCharIndex1);
+                currentCharIndex1++;
+                setTimeout(typeText1, 100); // Adjust typing speed here
+            } else {
+                setTimeout(eraseText1, 1000); // Wait before erasing
+            }
+        }
+
+        function eraseText1() {
+            if (currentCharIndex1 > 0) {
+                typingTextElement1.textContent = texts1[currentTextIndex1].substring(0, currentCharIndex1 - 1);
+                currentCharIndex1--;
+                setTimeout(eraseText1, 50); // Adjust erasing speed here
+            } else {
+                currentTextIndex1 = (currentTextIndex1 + 1) % texts1.length;
+                setTimeout(typeText1, 200); // Wait before typing the next text
+            }
+        }
+
+        function typeText2() {
+            if (currentCharIndex2 < texts2[currentTextIndex2].length) {
+                typingTextElement2.textContent += texts2[currentTextIndex2].charAt(currentCharIndex2);
+                currentCharIndex2++;
+                setTimeout(typeText2, 100); // Adjust typing speed here
+            } else {
+                setTimeout(eraseText2, 1000); // Wait before erasing
+            }
+        }
+
+        function eraseText2() {
+            if (currentCharIndex2 > 0) {
+                typingTextElement2.textContent = texts2[currentTextIndex2].substring(0, currentCharIndex2 - 1);
+                currentCharIndex2--;
+                setTimeout(eraseText2, 50); // Adjust erasing speed here
+            } else {
+                currentTextIndex2 = (currentTextIndex2 + 1) % texts2.length;
+                setTimeout(typeText2, 200); // Wait before typing the next text
+            }
+        }
+
+        function typeText3() {
+            if (currentCharIndex3 < texts3[currentTextIndex3].length) {
+                typingTextElement3.textContent += texts3[currentTextIndex3].charAt(currentCharIndex3);
+                currentCharIndex3++;
+                setTimeout(typeText3, 100); // Adjust typing speed here
+            } else {
+                setTimeout(eraseText3, 1000); // Wait before erasing
+            }
+        }
+
+        function eraseText3() {
+            if (currentCharIndex3 > 0) {
+                typingTextElement3.textContent = texts3[currentTextIndex3].substring(0, currentCharIndex3 - 1);
+                currentCharIndex3--;
+                setTimeout(eraseText3, 50); // Adjust erasing speed here
+            } else {
+                currentTextIndex3 = (currentTextIndex3 + 1) % texts3.length;
+                setTimeout(typeText3, 200); // Wait before typing the next text
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            typeText1();
+            typeText2();
+            typeText3();
+        });
+    </script>
+<!----------------------------- END Animasi ngetik ---------------------------------------->
+
 </body>
 </html>

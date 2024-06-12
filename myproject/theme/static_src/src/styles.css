@@ -4,6 +4,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Anek+Latin:wght@100..800&display=swap');
 
+html {
+  scroll-behavior: smooth;
+}
+
 .anek-latin-thin{
     font-family: "Anek Latin", sans-serif;
     font-optical-sizing: auto;
@@ -76,11 +80,11 @@
       "wdth" 100;
 }
 
-.font-outline-2 {
+.font-outline-custom-2 {
     -webkit-text-stroke: 2px white;
 }
 
-.font-outline-1 {
+.font-outline-custom-1 {
     -webkit-text-stroke: 1px white;
 } 
 
@@ -156,3 +160,103 @@
   background-size: 10px 2px;
   animation: dash-green2 15s linear infinite;
 }
+
+.tab {
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+  background-color: transparent; /* Default transparent color */
+  color: white;
+}
+
+.tab.active-lstm {
+  background-color: #6A0DAD; /* Ungu */
+  color: white;
+}
+
+.tab.active-gru {
+  background-color: #FFD700; /* Kuning */
+  color: black;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.card {
+  transition: all 0.3s ease-in-out;
+}
+
+.card.lstm {
+  border: 3px solid #6A0DAD; /* Ungu */
+}
+
+.card.gru {
+  border: 3px solid #FFD700; /* Kuning */
+}
+
+.prediction {
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.prediction.up {
+  color: #00E676;
+}
+
+.prediction.down {
+  color: red;
+}
+
+.arrow {
+  margin-left: 8px;
+}
+
+.up {
+  color: #00E676;
+}
+
+.down {
+  color: red;
+}
+
+/* styles.css */
+.news-image-container {
+  width: 22vw; /* Set the width of the image container */
+  height: 10vw; /* Set the height of the image container */
+  overflow: hidden; /* Hide any overflow */
+  flex-shrink: 0; /* Prevent the container from shrinking */
+}
+
+.news-image {
+  width: 100%; /* Make the image width 100% of the container */
+  height: 100%; /* Make the image height 100% of the container */
+  object-fit: cover; /* Ensure the image covers the entire container */
+  border-radius: 8px; /* Optional: add rounded corners to the image */
+}
+
+.news-content {
+  padding-left: 1vw; /* Add padding to the left of the content */
+  flex: 1; /* Allow the content to take up the remaining space */
+}
+
+/* styles.css */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.blurred {
+  filter: blur(10px);
+  transition: filter 1s ease-in-out;
+}
+
+.visible {
+  animation: fadeIn 1s ease-in-out forwards;
+  filter: blur(0);
+}
+
