@@ -3,9 +3,6 @@ import pandas as pd
 import pandas_ta as ta
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
-# from tensorflow.keras.models import Sequential, load_model
-# from tensorflow.keras.optimizers import Adam
-# from tensorflow.keras import layers
 import numpy as np
 import os
 import joblib
@@ -17,10 +14,28 @@ import io
 import base64
 import pandas as pd
 import numpy as np
+from .prednext import GrabDataForNextDayReg, GrabDataForNextDayClf
 
 def index(request):
+    my_scaler = joblib.load('myapp/models/feature_scaler.gz')
+    my_price_scaler = joblib.load('myapp/models/price_scaler.gz')
+    my_classifier = joblib.load('myapp/models/xgbc_v1.gz')
+    new_model_lstm = tf.keras.models.load_model('myapp/models/lstm_regmodel_v2.keras', compile=False)
+    new_model_gru = tf.keras.models.load_model('myapp/models/gru_regmodel_v1.keras', compile=False)
 
-    return render(request, 'index.html')
+    lstm_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_lstm)
+    gru_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_gru)
+    xgb_prediction = GrabDataForNextDayClf(my_classifier)
+    
+
+    context = {
+        'lstm_prediction': lstm_prediction,
+        'gru_prediction': gru_prediction,
+        'xgb_prediction': xgb_prediction
+
+    }
+
+    return render(request, 'index.html', context)
 
 def get_stock_data(ticker):
     stock = yf.Ticker(ticker)

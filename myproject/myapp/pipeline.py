@@ -219,7 +219,7 @@ callback = EarlyStopping(monitor='val_loss', patience = 20,
 
 
 model_lstm = Sequential([layers.Input((10, 7)),
-                    layers.LSTM(128,return_sequences=True),
+                    # layers.LSTM(128,return_sequences=True),
                     layers.LSTM(64,return_sequences=False),
                     layers.Dense(64,activation = 'relu'),
                     layers.Dense(32, activation = 'relu'),
@@ -248,3 +248,4 @@ model_gru.compile(loss='mse',
 
 history_gru = model_gru.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=200)
 
+# model_lstm.save('D:/Unair Semester 6/Machine Learning/CuanCeria/lstm_regmodel_v2.keras')

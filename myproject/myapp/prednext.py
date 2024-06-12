@@ -367,20 +367,21 @@ import joblib
 
 #loading both the feature scaler and the price scaler
 
-my_scaler = joblib.load('D:/Unair Semester 6/Machine Learning/CuanCeria/feature_scaler.gz')
-my_price_scaler = joblib.load('D:/Unair Semester 6/Machine Learning/CuanCeria/price_scaler.gz')
+# my_scaler = joblib.load('D:/Unair Semester 6/Machine Learning/CuanCeria/feature_scaler.gz')
+# my_price_scaler = joblib.load('D:/Unair Semester 6/Machine Learning/CuanCeria/price_scaler.gz')
 
 #loading the lstm model
-# new_model_lstm = tf.keras.models.load_model('D:/Unair Semester 6/Machine Learning/CuanCeria/lstm_regmodel_v1.keras')
+# new_model_lstm = tf.keras.models.load_model('D:/Unair Semester 6/Machine Learning/CuanCeria/lstm_regmodel_v2.keras', compile=False)
+# new_model_lstm.compile(loss='mse', optimizer=Adam(learning_rate=0.001), metrics=['mean_absolute_error'])
 
 #loading the gru model
-# new_model_gru = tf.keras.models.load_model('D:/Unair Semester 6/Machine Learning/CuanCeria/gru_regmodel_v1.keras')
+# new_model_gru = tf.keras.models.load_model('D:/Unair Semester 6/Machine Learning/CuanCeria/gru_regmodel_v1.keras', compile=False)
 
-# GrabDataForNextDayReg(my_scaler,my_price_scaler, new_model_gru)
+# print(GrabDataForNextDayReg(my_scaler,my_price_scaler, new_model_gru))
 
 
-# GrabDataForNextDayReg(my_scaler,my_price_scaler, new_model_lstm)
+# print(GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_lstm))
 
-my_classifier = joblib.load('D:/Unair Semester 6/Machine Learning/CuanCeria/xgbc_v1.gz')
+# my_classifier = joblib.load('D:/Unair Semester 6/Machine Learning/CuanCeria/xgbc_v1.gz')
 
-GrabDataForNextDayClf(my_classifier)
+# GrabDataForNextDayClf(my_classifier)
