@@ -18,26 +18,6 @@ import logging
 # # Configure logging
 # logging.basicConfig(level=logging.DEBUG)
 
-def index(request):
-    my_scaler = joblib.load('myapp/models/feature_scaler.gz')
-    my_price_scaler = joblib.load('myapp/models/price_scaler.gz')
-    my_classifier = joblib.load('myapp/models/xgbc_v1.gz')
-    new_model_lstm = tf.keras.models.load_model('myapp/models/lstm_regmodel_v2.keras', compile=False)
-    new_model_gru = tf.keras.models.load_model('myapp/models/gru_regmodel_v1.keras', compile=False)
-
-    lstm_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_lstm)
-    gru_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_gru)
-    xgb_prediction = GrabDataForNextDayClf(my_classifier)
-
-    context = {
-        'lstm_prediction': lstm_prediction,
-        'gru_prediction': gru_prediction,
-        'xgb_prediction': xgb_prediction
-
-    }
-
-    return render(request, 'index.html', context)
-
 def get_stock_data(ticker):
     stock = yf.Ticker(ticker)
     data = stock.history(period="1y")

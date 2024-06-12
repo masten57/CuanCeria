@@ -202,5 +202,5 @@ model_gru.compile(loss='mse',
 
 history_gru = model_gru.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=200)
 
-model_lstm.save('D:/Unair Semester 6/Machine Learning/CuanCeria/myproject/myapp/models/lstm_regmodel_v2.keras')
+# model_lstm.save('D:/Unair Semester 6/Machine Learning/CuanCeria/myproject/myapp/models/lstm_regmodel_v2.keras')
 # model_gru.save('myapp/models/gru_regmodel_v1.keras')
