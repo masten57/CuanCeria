@@ -77,11 +77,11 @@ def home(request):
     percent_change = (price_change / prev_price) * 100
 
     # Load models and make predictions
-    my_scaler = joblib.load('myapp/models/feature_scaler.gz')
-    my_price_scaler = joblib.load('myapp/models/price_scaler.gz')
+    my_scaler = joblib.load('myapp/models/feature_scalerv2.gz')
+    my_price_scaler = joblib.load('myapp/models/price_scalerv2.gz')
     my_classifier = joblib.load('myapp/models/xgbc_v1.gz')
     new_model_lstm = tf.keras.models.load_model('myapp/models/lstm_regmodel_v2.keras', compile=False)
-    new_model_gru = tf.keras.models.load_model('myapp/models/gru_regmodel_v1.keras', compile=False)
+    new_model_gru = tf.keras.models.load_model('myapp/models/gru_regmodel_v2.keras', compile=False)
 
     lstm_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_lstm)
     gru_prediction = GrabDataForNextDayReg(my_scaler, my_price_scaler, new_model_gru)
